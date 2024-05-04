@@ -8,25 +8,38 @@ body{
 	padding-bottom: 64px; 
 }
 
+table{
+    width: 100%;
+}
+
 td {
     padding-bottom: 16px;
     padding-left: 32px; /* Adds padding to cells */
-    width: 50%; /* Set each column to be 50% wide */
-    display: flex;
-    align-items: center; /* Vertical centering */
-    justify-content: center; /* Horizontal centering */
-
 }
+
+table td:first-child {
+    width: 40%; /* The left cell takes up 40% of the table width */
+}
+
+table td:last-child {
+    width: 60%; /* The right cell takes up 60% of the table width */
+}
+
 
 img{
     height: 150px; 
+}
+
+canvas{
+    width: 100px;
+    height: 100px;
 }
 
 h1{
 	font-weight: bold;
 	color: #dedede;
     font-size: 45px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
 }
 
 h2{
