@@ -1,69 +1,24 @@
 let mobilenet;
 let classifyBtn;
 let resetBtn;
-let resultClickedDiv;
-let resultUploadedDiv;
-let clickedImageChart;
-let uploadedImageChart;
-let selectedImageClicked = null;
-let selectedImageUploaded = null;
+let resultDiv;
+let uploadedImage;
+let barChart;
+let selectedImage = null;
 
-// Initialize the MobileNet model and bar charts
-function initializeModelAndCharts() {
+// Initialize the MobileNet model and bar chart
+function initializeModelAndChart() {
     const options = { version: 1, alpha: 1.0, topk: 6 };
     mobilenet = ml5.imageClassifier('MobileNet', options, modelReady);
+    
+    const ctx = document.getElementById('results').getContext('2d');
 
-    // Create chart for clicked images
-    const ctxClicked = document.getElementById('results-clicked').getContext('2d');
-    clickedImageChart = new Chart(ctxClicked, {
+    barChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: [],
             datasets: [{
-                label: 'Confidence',
-                data: [],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            legend: { display: false },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    suggestedMax: 1,
-                    title: {
-                        display: true,
-                        text: 'Confidence'
-                    }
-                }
-            }
-        }
-    });
-
-    // Create chart for uploaded images
-    const ctxUploaded = document.getElementById('results-uploaded').getContext('2d');
-    uploadedImageChart = new Chart(ctxUploaded, {
-        type: 'bar',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Confidence',
+                label: 'Classes',
                 data: [],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -105,18 +60,23 @@ function modelReady() {
     console.log('Model is ready!');
 }
 
-// Handle file change and classify uploaded image
-function handleFileChange(event) {
+// Handle file selection through file input or drag-and-drop
+function fileUpload(event) {
     const files = event.target.files || event.dataTransfer.files;
     const file = files[0];
     if (file && file.type.startsWith("image/")) {
         const reader = new FileReader();
         reader.onload = function (e) {
-            selectedImageUploaded = new Image();
-            selectedImageUploaded.onload = function() {
-                classifyUploadedImage();
+            // Set the uploaded image and enable classify button
+            uploadedImage = new Image();
+            uploadedImage.onload = function() {
+                document.getElementById('uploaded-image').src = e.target.result;
+                document.getElementById('uploaded-image').style.display = "block";
+                classifyBtn.disabled = false;
+                resetBtn.disabled = false;
+                selectedImage = uploadedImage;
             };
-            selectedImageUploaded.src = e.target.result;
+            uploadedImage.src = e.target.result;
         };
         reader.readAsDataURL(file);
     } else {
@@ -124,85 +84,72 @@ function handleFileChange(event) {
     }
 }
 
-// Classify the uploaded image and display results
-function classifyUploadedImage() {
-    if (selectedImageUploaded) {
-        mobilenet.classify(selectedImageUploaded, (error, results) => {
+// Classify the selected image and display results
+function classifyImage() {
+    if (selectedImage) {
+        mobilenet.classify(selectedImage, (error, results) => {
             if (error) {
                 console.error(error);
                 return;
             }
-            
-            // Display results for uploaded image
-            resultUploadedDiv.innerHTML = `Image classified as: ${results[0].label.split(',')[0]} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
-            
-            // Update the uploaded image chart
-            updateUploadedChart(results);
+            // Display the classification result
+            resultDiv.innerHTML = `Image classified as: ${results[0].label.split(',')[0]} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
+
+            // Update the bar chart with classification results
+            updateChart(results);
         });
     }
 }
 
-// Classify clicked image and display results
-function classifyClickedImage(imageElement) {
-    selectedImageClicked = new Image();
-    selectedImageClicked.src = imageElement.src;
-
-    selectedImageClicked.onload = function() {
-        mobilenet.classify(selectedImageClicked, (error, results) => {
-            if (error) {
-                console.error(error);
-                return;
-            }
-            
-            // Display results for clicked image
-            resultClickedDiv.innerHTML = `Image classified as: ${results[0].label.split(',')[0]} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
-            
-            // Update the clicked image chart
-            updateClickedChart(results);
-        });
-    };
-}
-
-// Update chart for clicked images
-function updateClickedChart(results) {
+// Update the bar chart with classification results
+function updateChart(results) {
     const labels = results.map(result => result.label.split(',')[0]);
     const data = results.map(result => result.confidence);
 
-    clickedImageChart.data.labels = labels;
-    clickedImageChart.data.datasets[0].data = data;
-    clickedImageChart.update();
+    barChart.data.labels = labels;
+    barChart.data.datasets[0].data = data;
+    barChart.update();
+
+    // Show the results bar chart
+    document.getElementById("results").style.display = "block";
 }
 
-// Update chart for uploaded images
-function updateUploadedChart(results) {
-    const labels = results.map(result => result.label.split(',')[0]);
-    const data = results.map(result => result.confidence);
-
-    uploadedImageChart.data.labels = labels;
-    uploadedImageChart.data.datasets[0].data = data;
-    uploadedImageChart.update();
+// Reset the dropzone, image, and classification result
+function reset() {
+    document.getElementById('uploaded-image').src = '';
+    document.getElementById('uploaded-image').style.display = 'none';
+    classifyBtn.disabled = true;
+    resetBtn.disabled = true;
+    resultDiv.innerHTML = '';
+    selectedImage = null;
+    // Clear bar chart data
+    barChart.data.labels = [];
+    barChart.data.datasets[0].data = [];
+    barChart.update();
+  //  document.getElementById('results').style.display = 'none';
 }
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the model and charts
-    initializeModelAndCharts();
+    // Initialize the model and chart
+    initializeModelAndChart();
 
-    // Set up result containers
-    resultClickedDiv = document.getElementById('result-clicked');
-    resultUploadedDiv = document.getElementById('result-uploaded');
+    // Set up elements and event listeners
+    classifyBtn = document.getElementById('classify-btn');
+    resetBtn = document.getElementById('reset-btn');
+    resultDiv = document.getElementById('result');
 
-    // Set up file input handler
+    // Handle file input
     const fileInput = document.getElementById('upload-link');
     fileInput.addEventListener('click', function() {
         const fileInputElement = document.createElement('input');
         fileInputElement.type = 'file';
         fileInputElement.accept = 'image/*';
-        fileInputElement.onchange = handleFileChange;
+        fileInputElement.onchange = fileUpload;
         fileInputElement.click();
     });
 
-    // Set up dropzone
+    // Drag-and-drop functionality
     const dropzone = document.getElementById('dropzone');
     dropzone.addEventListener('dragover', function(e) {
         e.preventDefault();
@@ -216,6 +163,28 @@ document.addEventListener('DOMContentLoaded', function() {
     dropzone.addEventListener('drop', function(e) {
         e.preventDefault();
         dropzone.style.borderColor = '#cccccc';
-        handleFileChange(e);
+        fileUpload(e);
     });
+
+    // Classify button click
+    classifyBtn.addEventListener('click', classifyImage);
+
+    // Reset button click
+    resetBtn.addEventListener('click', reset);
 });
+
+function selectImage(imageElement) {
+  // Set the clicked image as the selected image
+  selectedImage = new Image();
+  selectedImage.onload = function() {
+      // Display the selected image in the uploaded image element
+      document.getElementById('uploaded-image').src = imageElement.src;
+      document.getElementById('uploaded-image').style.display = "block";
+      classifyBtn.disabled = false;
+      resetBtn.disabled = false;
+      
+      // Trigger classification for the selected image
+      classifyImage();
+  };
+  selectedImage.src = imageElement.src;
+}
