@@ -14,32 +14,51 @@
     <div class="section">
       <h1>Deep Learning EA 1: Bilderkennung mit ml5</h1>
       <h2>Example classification</h2>
-      <div class="container">
-        <div class="column">
           <label>Example for correct classification</label>
           <p>Click the images below to display the classification result. All three images in this section will be classified correctly by the model. </p>
-          <div class="image-container">
-            <img onclick="selectImage(this)" src="images/cat.png" class="image">
-            <img onclick="selectImage(this)" src="images/horse.png" class="image">
-            <img onclick="selectImage(this)" src="images/bird.png" class="image">
-          </div>
+          <table class="image-container">
+            <tr>
+              <td><img onclick="selectImage(this)" src="images/cat.png" class="image"></td>
+              <td><div id="result1">
+                <canvas id="results1" width="60" height="60"></canvas>
+              </div></td>
+            </tr>
+            <tr>
+              <td><img onclick="selectImage(this)" src="images/horse.png" class="image"></td>
+              <td><div id="result2">
+                <canvas id="results2" width="60" height="60"></canvas>
+              </div></td>
+            </tr>
+            <tr>
+              <td><img onclick="selectImage(this)" src="images/bird.png" class="image"></td>
+              <td><div id="result3">
+                <canvas id="results3" width="60" height="60"></canvas>
+              </div></td>
+            </tr>
+        </table>
           <label>Example for false classification</label>
           <p>Click the images below to display the classification result. All three images in this section will be classified incorrectly by the model. </p>
-          <div class="image-container">
-            <img onclick="selectImage(this)" src="images/apple.png" class="image">
-            <img onclick="selectImage(this)" src="images/car.png" class="image">
-            <img onclick="selectImage(this)" src="images/chair.png" class="image">
-          </div>
+          <table class="image-container">
+            <tr>
+              <td><img onclick="selectImage(this)" src="images/apple.png" class="image"></td>
+              <td><div id="result4">
+                <canvas id="results4" width="60" height="60"></canvas>
+              </div></td>
+            </tr>
+            <tr>
+              <td><img onclick="selectImage(this)" src="images/car.png" class="image"></td>
+              <td><div id="result5">
+                <canvas id="results5" width="60" height="60"></canvas>
+              </div></td>
+            </tr>
+            <tr>
+              <td><img onclick="selectImage(this)" src="images/chair.png" class="image"></td>
+              <td><div id="result6">
+                <canvas id="results6" width="60" height="60"></canvas>
+              </div></td>
+            </tr>
+        </table>
         </div>
-        <div class="column">
-          <label>Result</label>
-          <div id="result2"></div>
-          <canvas id="results2" width="60" height="60"></canvas>
-    
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="section">
     <h2>Image Classification</h2>
     <p>Upload your own image for classification.</p>

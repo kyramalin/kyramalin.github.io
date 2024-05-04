@@ -5,60 +5,116 @@ let resultDiv;
 let uploadedImage;
 let barChart;
 let selectedImage = null;
+let barCharts = {};
 
-// Initialize the MobileNet model and bar chart
+// Initialize the MobileNet model and bar charts
 function initializeModelAndChart() {
     const options = { version: 1, alpha: 1.0, topk: 6 };
     mobilenet = ml5.imageClassifier('MobileNet', options, modelReady);
-    
-    const ctx = document.getElementById('results').getContext('2d');
 
-    barChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Classes',
-                data: [],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            legend: { display: false },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    suggestedMax: 1,
-                    title: {
-                        display: true,
-                        text: 'Confidence'
+    // Initialize six bar charts for each canvas (results1 to results6)
+    for (let i = 1; i <= 6; i++) {
+        const canvasId = `results${i}`;
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        
+        barCharts[canvasId] = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Classes',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: { display: false },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: 1,
+                        title: {
+                            display: true,
+                            text: 'Confidence'
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 }
 
 // Callback when the MobileNet model is ready
 function modelReady() {
     console.log('Model is ready!');
 }
+
+// Classify the selected image and update the specified canvas with results
+function classifyAndDisplayResults(imageElement, canvasId) {
+    mobilenet.classify(imageElement, (error, results) => {
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        // Display the classification result in the corresponding resultDiv
+        document.getElementById(`result-${canvasId}`).innerHTML = 
+            `Image classified as: ${results[0].label.split(',')[0]} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
+
+        // Update the bar chart in the specified canvas
+        updateChart(results, canvasId);
+    });
+}
+
+// Update the specified bar chart with classification results
+function updateChart(results, canvasId) {
+    const labels = results.map(result => result.label.split(',')[0]);
+    const data = results.map(result => result.confidence);
+
+    const barChart = barCharts[canvasId];
+    barChart.data.labels = labels;
+    barChart.data.datasets[0].data = data;
+    barChart.update();
+}
+
+// Function to classify an image and display results in the corresponding canvas
+function classifyImage(imageElement, canvasId) {
+    classifyAndDisplayResults(imageElement, canvasId);
+}
+
+// Event listeners for image selection and classification
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the model and charts
+    initializeModelAndChart();
+
+    // Event listeners for selecting and classifying images
+    const imageIds = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6'];
+
+    imageIds.forEach((id, index) => {
+        const imageElement = document.getElementById(id);
+        const canvasId = `results${index + 1}`;
+
+        imageElement.addEventListener('click', function() {
+            classifyImage(imageElement, canvasId);
+        });
+    });
+});
 
 // Handle file selection through file input or drag-and-drop
 function fileUpload(event) {
@@ -84,35 +140,6 @@ function fileUpload(event) {
     }
 }
 
-// Classify the selected image and display results
-function classifyImage() {
-    if (selectedImage) {
-        mobilenet.classify(selectedImage, (error, results) => {
-            if (error) {
-                console.error(error);
-                return;
-            }
-            // Display the classification result
-            resultDiv.innerHTML = `Image classified as: ${results[0].label.split(',')[0]} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
-
-            // Update the bar chart with classification results
-            updateChart(results);
-        });
-    }
-}
-
-// Update the bar chart with classification results
-function updateChart(results) {
-    const labels = results.map(result => result.label.split(',')[0]);
-    const data = results.map(result => result.confidence);
-
-    barChart.data.labels = labels;
-    barChart.data.datasets[0].data = data;
-    barChart.update();
-
-    // Show the results bar chart
-    document.getElementById("results").style.display = "block";
-}
 
 // Reset the dropzone, image, and classification result
 function reset() {
@@ -128,50 +155,6 @@ function reset() {
     barChart.update();
   //  document.getElementById('results').style.display = 'none';
 }
-
-// Event listeners
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the model and chart
-    initializeModelAndChart();
-
-    // Set up elements and event listeners
-    classifyBtn = document.getElementById('classify-btn');
-    resetBtn = document.getElementById('reset-btn');
-    resultDiv = document.getElementById('result');
-
-    // Handle file input
-    const fileInput = document.getElementById('upload-link');
-    fileInput.addEventListener('click', function() {
-        const fileInputElement = document.createElement('input');
-        fileInputElement.type = 'file';
-        fileInputElement.accept = 'image/*';
-        fileInputElement.onchange = fileUpload;
-        fileInputElement.click();
-    });
-
-    // Drag-and-drop functionality
-    const dropzone = document.getElementById('dropzone');
-    dropzone.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        dropzone.style.borderColor = '#007BFF';
-    });
-
-    dropzone.addEventListener('dragleave', function() {
-        dropzone.style.borderColor = '#cccccc';
-    });
-
-    dropzone.addEventListener('drop', function(e) {
-        e.preventDefault();
-        dropzone.style.borderColor = '#cccccc';
-        fileUpload(e);
-    });
-
-    // Classify button click
-    classifyBtn.addEventListener('click', classifyImage);
-
-    // Reset button click
-    resetBtn.addEventListener('click', reset);
-});
 
 function selectImage(imageElement) {
   // Set the clicked image as the selected image
