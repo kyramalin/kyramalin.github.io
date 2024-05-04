@@ -4,16 +4,16 @@ let classifier;
 // A variable to hold the image we want to classify
 let img;
 
-async function preload() {
-  classifier = await ml5.imageClassifier('MobileNet');
-  console.log(classifier);
-  img = await loadImage('images/bird.png');
+function preload() {
+  classifier = ml5.imageClassifier('MobileNet');
+  
+  img = loadImage('images/bird.png');
 }
 
 function setup() {
   createCanvas(400, 400);
-  classifier.classify(img, gotResult);
-  image(img, 0, 0);
+  setTimeout(classifier.classify(img, gotResult), 3000);
+  setTimeout(image(img, 0, 0), 6000);
 }
 
 // A function to run when we get any errors and the results
