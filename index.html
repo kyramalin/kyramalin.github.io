@@ -6,60 +6,59 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
   <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/ml5@latest/dist/ml5.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <body> 
-    <div class="section">
+    <div>
       <h1>Deep Learning EA 1: Bilderkennung mit ml5</h1>
       <h2>Example classification</h2>
           <label>Example for correct classification</label>
           <p>Click the images below to display the classification result. All three images in this section will be classified correctly by the model. </p>
-          <table class="image-container">
+          <table>
             <tr>
-              <td><img onclick="selectImage(this)" src="images/cat.png" class="image"></td>
-              <td><div id="result1">
-                <canvas id="results1" width="60" height="60"></canvas>
-              </div></td>
+              <td><img onclick="selectImage(this)" src="images/cat.png"></td>
+              <td>                 
+                <div id="result1">
+                <canvas id="results1" width="200" height="200"></canvas>
+              </div>
+            </td>
             </tr>
             <tr>
-              <td><img onclick="selectImage(this)" src="images/horse.png" class="image"></td>
+              <td><img onclick="selectImage(this)" src="images/horse.png"></td>
               <td><div id="result2">
-                <canvas id="results2" width="60" height="60"></canvas>
+                <canvas id="results2" width="200" height="200"></canvas>
               </div></td>
             </tr>
             <tr>
-              <td><img onclick="selectImage(this)" src="images/bird.png" class="image"></td>
+              <td><img onclick="selectImage(this)" src="images/bird.png"></td>
               <td><div id="result3">
-                <canvas id="results3" width="60" height="60"></canvas>
+                <canvas id="results3" width="200" height="200"></canvas>
               </div></td>
             </tr>
         </table>
           <label>Example for false classification</label>
           <p>Click the images below to display the classification result. All three images in this section will be classified incorrectly by the model. </p>
-          <table class="image-container">
+          <table>
             <tr>
-              <td><img onclick="selectImage(this)" src="images/apple.png" class="image"></td>
+              <td><img onclick="selectImage(this)" src="images/apple.png"></td>
               <td><div id="result4">
-                <canvas id="results4" width="60" height="60"></canvas>
+                <canvas id="results4" width="200" height="200"></canvas>
               </div></td>
             </tr>
             <tr>
-              <td><img onclick="selectImage(this)" src="images/car.png" class="image"></td>
+              <td><img onclick="selectImage(this)" src="images/car.png"></td>
               <td><div id="result5">
-                <canvas id="results5" width="60" height="60"></canvas>
+                <canvas id="results5" width="200" height="200"></canvas>
               </div></td>
             </tr>
             <tr>
-              <td><img onclick="selectImage(this)" src="images/chair.png" class="image"></td>
+              <td><img onclick="selectImage(this)" src="images/chair.png"></td>
               <td><div id="result6">
-                <canvas id="results6" width="60" height="60"></canvas>
+                <canvas id="results6" width="200" height="200"></canvas>
               </div></td>
             </tr>
         </table>
         </div>
-  <div class="section">
+  <div>
     <h2>Image Classification</h2>
     <p>Upload your own image for classification.</p>
      <div class="container">
@@ -76,14 +75,14 @@
       <img id="uploaded-image" src="" alt="Uploaded Image">
   
     </div>
-      <div class="column">
+      <div>
         <label>Result</label>
         <div id="result"></div>
         <canvas id="results" width="60" height="60"></canvas>
       </div>
   </div>
   </div>
-  <div class="section">
+  <div>
     <h2>Dokumentation</h2>
     <h3>Übersicht</h3>
     <p>Auf dieser Seite können Bilder mithilfe des ml5.js Frameworks klassifiziert werden.
@@ -103,8 +102,6 @@
         Stuhl: https://www.connox.de/kategorien/moebel/stuehle/frankfurter-stuhl.html</p>
     </div>
 </div>
-
   <script src="sketch.js"></script>
 </body>
-
 </html>

@@ -8,11 +8,25 @@ body{
 	padding-bottom: 64px; 
 }
 
+td {
+    padding-bottom: 16px;
+    padding-left: 32px; /* Adds padding to cells */
+    width: 50%; /* Set each column to be 50% wide */
+    display: flex;
+    align-items: center; /* Vertical centering */
+    justify-content: center; /* Horizontal centering */
+
+}
+
+img{
+    height: 150px; 
+}
+
 h1{
 	font-weight: bold;
 	color: #dedede;
     font-size: 45px;
-    padding-bottom: 50px;
+    padding-bottom: 40px;
 }
 
 h2{
@@ -20,39 +34,10 @@ h2{
 	font-weight: bold;
 }
 
-.container{
-	display: flex;
-}
-
-
-.column{
-	flex: 1;
-	padding: 10px;
-	margin-right: 64px;
-}
-
 label{
     font-size: 20px;
 	font-weight: bold;
 	color: #b2c0d6;
-}
-
-.image-container {
-	width: 100px; 
-	margin-left: 64px;
-}
-
-.image-container img {
-	display: block;
-	width: 100%; 
-	margin-bottom: 50px; 
-	margin-top: 30px; 
-}
-
-.image:hover {
-	border-radius: 20px;
-	box-shadow: inset 0 0 0 5px rgb(107, 156, 224);
-    cursor: pointer;
 }
 
 #dropzone {
