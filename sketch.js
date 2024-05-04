@@ -3,18 +3,19 @@ let classifyBtn;
 let resetBtn;
 let resultDiv;
 let uploadedImage;
-let barChart;
-let selectedImage = null;
 let barCharts = {};
+let selectedImage = null;
+
+// Array of canvas IDs for the six images and one for user-uploaded images
+const canvasIDs = ['results1', 'results2', 'results3', 'results4', 'results5', 'results6', 'results7'];
 
 // Initialize the MobileNet model and bar charts
 function initializeModelAndChart() {
     const options = { version: 1, alpha: 1.0, topk: 6 };
     mobilenet = ml5.imageClassifier('MobileNet', options, modelReady);
 
-    // Initialize six bar charts for each canvas (results1 to results6)
-    for (let i = 1; i <= 6; i++) {
-        const canvasId = `results${i}`;
+    // Initialize a bar chart for each canvas ID
+    canvasIDs.forEach(canvasId => {
         const ctx = document.getElementById(canvasId).getContext('2d');
         
         barCharts[canvasId] = new Chart(ctx, {
@@ -57,7 +58,7 @@ function initializeModelAndChart() {
                 }
             }
         });
-    }
+    });
 }
 
 // Callback when the MobileNet model is ready
@@ -65,7 +66,7 @@ function modelReady() {
     console.log('Model is ready!');
 }
 
-// Classify the selected image and update the specified canvas with results
+// Classify the selected image and display results in the specified canvas
 function classifyAndDisplayResults(imageElement, canvasId) {
     mobilenet.classify(imageElement, (error, results) => {
         if (error) {
@@ -73,8 +74,9 @@ function classifyAndDisplayResults(imageElement, canvasId) {
             return;
         }
 
-        // Display the classification result in the corresponding resultDiv
-        document.getElementById(`result-${canvasId}`).innerHTML = 
+        // Display the classification result in the result div for the specified canvas
+        const resultDivId = `result-${canvasId}`;
+        document.getElementById(resultDivId).innerHTML = 
             `Image classified as: ${results[0].label.split(',')[0]} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
 
         // Update the bar chart in the specified canvas
@@ -93,44 +95,25 @@ function updateChart(results, canvasId) {
     barChart.update();
 }
 
-// Function to classify an image and display results in the corresponding canvas
-function classifyImage(imageElement, canvasId) {
-    classifyAndDisplayResults(imageElement, canvasId);
-}
-
-// Event listeners for image selection and classification
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the model and charts
-    initializeModelAndChart();
-
-    // Event listeners for selecting and classifying images
-    const imageIds = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6'];
-
-    imageIds.forEach((id, index) => {
-        const imageElement = document.getElementById(id);
-        const canvasId = `results${index + 1}`;
-
-        imageElement.addEventListener('click', function() {
-            classifyImage(imageElement, canvasId);
-        });
-    });
-});
-
-// Handle file selection through file input or drag-and-drop
+// Handle file upload and classify the uploaded image
 function fileUpload(event) {
     const files = event.target.files || event.dataTransfer.files;
     const file = files[0];
+    
     if (file && file.type.startsWith("image/")) {
         const reader = new FileReader();
-        reader.onload = function (e) {
-            // Set the uploaded image and enable classify button
+        
+        reader.onload = function(e) {
             uploadedImage = new Image();
+            
             uploadedImage.onload = function() {
                 document.getElementById('uploaded-image').src = e.target.result;
                 document.getElementById('uploaded-image').style.display = "block";
                 classifyBtn.disabled = false;
                 resetBtn.disabled = false;
-                selectedImage = uploadedImage;
+                
+                // Classify the uploaded image and display results in the seventh canvas
+                classifyAndDisplayResults(uploadedImage, 'results7');
             };
             uploadedImage.src = e.target.result;
         };
@@ -140,54 +123,75 @@ function fileUpload(event) {
     }
 }
 
-
 // Reset the dropzone, image, and classification result
 function reset() {
     document.getElementById('uploaded-image').src = '';
     document.getElementById('uploaded-image').style.display = 'none';
     classifyBtn.disabled = true;
     resetBtn.disabled = true;
-    resultDiv.innerHTML = '';
     selectedImage = null;
-    // Clear bar chart data
-    barChart.data.labels = [];
-    barChart.data.datasets[0].data = [];
-    barChart.update();
-  //  document.getElementById('results').style.display = 'none';
+
+    // Reset bar chart data for all charts
+    canvasIDs.forEach(canvasId => {
+        const barChart = barCharts[canvasId];
+        barChart.data.labels = [];
+        barChart.data.datasets[0].data = [];
+        barChart.update();
+    });
 }
 
-function selectImage(imageElement) {
-  // Set the clicked image as the selected image
-  selectedImage = new Image();
-  selectedImage.onload = function() {
-      // Display the selected image in the uploaded image element
-      document.getElementById('uploaded-image').src = imageElement.src;
-      document.getElementById('uploaded-image').style.display = "block";
-      classifyBtn.disabled = false;
-      resetBtn.disabled = false;
-      
-      // Trigger classification for the selected image
-      classifyImage();
-  };
-  selectedImage.src = imageElement.src;
-}
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the model and charts
+    initializeModelAndChart();
 
-function selectImage(imageElement) {
-  // Set the clicked image as the selected image
-  selectedImage = new Image();
-  selectedImage.onload = function() {
-      // Display the selected image in the uploaded image element
-      document.getElementById('uploaded-image').src = imageElement.src;
-      document.getElementById('uploaded-image').style.display = "block";
+    // Event listeners for file upload and classification buttons
+    const fileInput = document.getElementById('upload-link');
+    
+    fileInput.addEventListener('click', function() {
+        const fileInputElement = document.createElement('input');
+        fileInputElement.type = 'file';
+        fileInputElement.accept = 'image/*';
+        fileInputElement.onchange = fileUpload;
+        fileInputElement.click();
+    });
 
-      // Enable classify and reset buttons
-      classifyBtn.disabled = false;
-      resetBtn.disabled = false;
+    const dropzone = document.getElementById('dropzone');
+    
+    dropzone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dropzone.style.borderColor = '#007BFF';
+    });
 
-      // Classify the selected image
-      classifyImage();
-  };
-  
-  // Set the image source to the clicked image's source
-  selectedImage.src = imageElement.src;
-}
+    dropzone.addEventListener('dragleave', function() {
+        dropzone.style.borderColor = '#cccccc';
+    });
+
+    dropzone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropzone.style.borderColor = '#cccccc';
+        fileUpload(e);
+    });
+
+    // Event listeners for classify and reset buttons
+    classifyBtn = document.getElementById('classify-btn');
+    resetBtn = document.getElementById('reset-btn');
+    
+    classifyBtn.addEventListener('click', function() {
+        classifyAndDisplayResults(selectedImage, 'results7');
+    });
+
+    resetBtn.addEventListener('click', reset);
+
+    // Event listeners for the six images on the page
+    const imageIds = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6'];
+    
+    imageIds.forEach((id, index) => {
+        const imageElement = document.getElementById(id);
+        const canvasId = `results${index + 1}`;
+
+        imageElement.addEventListener('click', function() {
+            classifyAndDisplayResults(imageElement, canvasId);
+        });
+    });
+});
