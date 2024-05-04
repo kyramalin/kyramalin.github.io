@@ -188,3 +188,23 @@ function selectImage(imageElement) {
   };
   selectedImage.src = imageElement.src;
 }
+
+function selectImage(imageElement) {
+  // Set the clicked image as the selected image
+  selectedImage = new Image();
+  selectedImage.onload = function() {
+      // Display the selected image in the uploaded image element
+      document.getElementById('uploaded-image').src = imageElement.src;
+      document.getElementById('uploaded-image').style.display = "block";
+
+      // Enable classify and reset buttons
+      classifyBtn.disabled = false;
+      resetBtn.disabled = false;
+
+      // Classify the selected image
+      classifyImage();
+  };
+  
+  // Set the image source to the clicked image's source
+  selectedImage.src = imageElement.src;
+}
