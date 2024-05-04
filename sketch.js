@@ -4,9 +4,9 @@ let classifier;
 // A variable to hold the image we want to classify
 let img;
 
-function preload() {
-  classifier = ml5.imageClassifier('MobileNet');
-  img = loadImage('images/bird.png');
+async function preload() {
+  classifier = await ml5.imageClassifier('MobileNet');
+  img = await loadImage('images/bird.png');
 }
 
 function setup() {
