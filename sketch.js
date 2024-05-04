@@ -6,6 +6,7 @@ let img;
 
 async function preload() {
   classifier = await ml5.imageClassifier('MobileNet');
+  console.log(classifier);
   img = await loadImage('images/bird.png');
 }
 
