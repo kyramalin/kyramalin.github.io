@@ -1,73 +1,68 @@
-body{
+/* General Styles */
+body {
     background-color: #1e1f21;
     font-family: 'Public Sans', sans-serif;
-	color: dedede;
-	padding-left: 128px;
-	padding-top: 64px;
-	padding-right: 128px;
-	padding-bottom: 64px; 
+    color: #dedede;
+    padding: 64px 128px;
 }
 
-table{
+h1 {
+    font-weight: bold;
+    color: #dedede;
+    font-size: 35px;
+    padding-bottom: 20px;
+}
+
+h2, label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+p, li{
+    font-size: 15px;
+    line-height: 21px;
+}
+
+table {
     width: 100%;
 }
 
 td {
     padding-bottom: 16px;
-    padding-left: 32px; /* Adds padding to cells */
+    padding-left: 32px;
 }
 
 table td:first-child {
-    width: 40%; /* The left cell takes up 40% of the table width */
+    width: 40%;
 }
 
 table td:last-child {
-    width: 60%; /* The right cell takes up 60% of the table width */
+    width: 60%;
 }
 
-img{
-    height: 200px; 
+/* Image and Canvas Styles */
+img {
+    height: 200px;
     object-fit: cover;
 }
 
-canvas{
+canvas {
     width: 50px;
     height: 50px;
 }
 
-h1{
-	font-weight: bold;
-	color: #dedede;
-    font-size: 35px;
-    padding-bottom: 20px;
-}
-
-h2{
-	font-size: 20pt;
-	font-weight: bold;
-}
-
-label{
-    font-size: 15px;
-	font-weight: bold;
-}
-
-p, li{
-    font-size: 15px;
-    line-height: 23px; 
-}
-
+/* Dropzone Styles */
 #dropzone {
     border: 1px dashed #838383;
     border-radius: 20px;
     padding: 50px;
-	box-sizing: border-box; /* Ensures padding and border are included in width */
     width: 100%;
-text-align: center;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 #dropzone:hover {
-background-color: rgb(107, 156, 224, 0.1);
+    background-color: rgba(107, 156, 224, 0.1);
 }
 
 #upload-link {
@@ -84,19 +79,16 @@ background-color: rgb(107, 156, 224, 0.1);
     display: none;
     max-width: 100%;
     max-height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     margin: auto;
 }
 
+/* Button Styles */
 .buttons {
     margin-top: 16px;
-	display: flex; /* Uses flexbox layout */
-    justify-content: space-between; /* Spreads the buttons evenly */
-    width: 100%; /* Matches the width of the dropzone */
-    box-sizing: border-box; 
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 button {
@@ -106,131 +98,138 @@ button {
     border-radius: 5px;
     border: none;
     background-color: rgb(107, 156, 224);
-    color: white;
+    color: rgb(245, 245, 255);
     cursor: pointer;
-	flex: 1; /* Each button takes an equal amount of space */
+    flex: 1;
+}
 
+.tooltip {
+    display: none; /* Initially hidden */
+    position: absolute;
+    background-color:  #0f0f11; /* Dark background */
+    color: #fff; /* White text */
+    padding: 10px 10px; /* Padding */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 13px; /* Smaller font size */
+    z-index: 1; /* Layering the tooltip above other elements */
+    opacity: 0; /* Initial opacity */
+    transition: opacity 1s ease; /* Smooth transition */
+    transition-delay: 1s;
+
+}
+
+/* Display the tooltip when hovering over a disabled button */
+button:disabled:hover .tooltip {
+    display: block;
+    opacity: 1; /* Show the tooltip with smooth transition */
 }
 
 button:disabled {
-    background-color: #a5a5a5;
+    background-color: rgba(231, 231, 231, 0.2);
+    color: rgba(231, 231, 231, 0.7);
 }
 
-button:not(:disabled):hover {
+button:not(:disabled):hover, #rest-btn:not(:disabled):hover {
     background-color: rgb(91, 134, 193);
+    color: #ffffff; /* Darker blue text color on hover */
+
+}
+
+/* Styling for the reset button */
+#reset-btn:not(:disabled) {
+    background-color: rgba(45, 141, 243, 0.2); /* A lighter blue background color */
+    color: rgb(106, 151, 213); /* Blue text color */
+    transition: background-color 0.3s, border 0.3s, color 0.3s; /* Smooth transitions for hover effects */
+}
+
+#reset-btn:not(:disabled):hover {
+    background-color: rgba(20, 89, 163, 0.2); /* Slightly darker blue background color on hover */
+    color: rgb(104, 138, 186); /* Darker blue text color on hover */
 }
 
 
-#uploadLink:hover {
-    text-decoration: none;
-}
-
-.dropzone.dragover {
-    border-color: #4CAF50;
-    background-color: #f0f0f0;
-}
-
-#currentImage{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    mix-blend-mode:normal;
-    z-index: 11;
-}
-
-/* CSS for accordion */
+/* Accordion Styles */
 .accordion {
     background-color: #27282b;
     color: #fff;
     cursor: pointer;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding: 15px 24px;
     width: 100%;
     text-align: left;
     outline: none;
-    font-size: 16px;
+    font-size: 15px;
     transition: 0.4s;
-  }
-  
-  .active, .accordion:hover {
-    background-color: #191a1d; 
-  }
-  
-  .panel {
-    padding-top: 5px;
-    padding-left: 28px;
-    padding-right: 28px;
+}
+
+.active, .accordion:hover {
+    background-color: #191a1d;
+}
+
+.panel {
+    padding: 5px 28px;
     display: none;
     overflow: hidden;
-  }
+}
 
-  .accordion:after {
-    content: '\02795'; /* Unicode character for "plus" sign (+) */
+.accordion:after {
+    content: '\02795'; /* Plus sign */
     font-size: 13px;
-    color: #777;
+    color: #ffffff;
     float: right;
     margin-left: 5px;
-  }
-  
-  .active:after {
-    content: "\2796"; /* Unicode character for "minus" sign (-) */
-  }
+}
 
-/* Define the spinner styles */
+.active:after {
+    content: "\2796"; /* Minus sign */
+}
+
+/* Spinner Styles */
 .spinner {
     width: 12px;
     height: 12px;
-    float:left;
+    float: left;
     border: 4px solid #bcbcbc;
-    border-top: 4px solid #5ca9fa; /* Change color as desired */
+    border-top: 4px solid #5ca9fa;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin-right: 15px; /* Add some spacing between the message and the spinner */
+    margin-right: 15px;
 }
-  /* Define the spinning animation */
-  @keyframes spin {
+
+@keyframes spin {
     from {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     to {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
+}
 
+/* Hint Styles */
 .hint {
-    color: #787777; /* Gray color */
-    font-size: 12px; /* Small font size */
+    color: #787777;
+    font-size: 12px;
     margin-bottom: 10px;
 }
 
-.incorrect{
-    padding-top: 10px;
-    padding-bottom: 10px; 
-    padding-left: 20px;
-    padding-right: 20px; 
-    background-color: rgb(149, 0, 0, 0.3);
-    border:solid;
-    border-color: rgb(149, 0, 0);
+/* Correct and Incorrect Styles */
+.correct, .incorrect {
+    padding: 10px 20px;
     border-radius: 10px;
-    border-width: 1px; 
+    border-width: 1px;
 }
 
-.correct{
-    padding-top: 10px;
-    padding-bottom: 10px; 
-    padding-left: 20px;
-    padding-right: 20px; 
+.correct {
     background-color: rgba(4, 168, 28, 0.3);
-    border:solid;
-    border-color: rgb(1, 139, 22);
-    border-radius: 10px;
-    border-width: 1px; 
+    border: solid rgb(1, 139, 22);
 }
 
-/* Define the 'no-background' class */
+.incorrect {
+    background-color: rgba(149, 0, 0, 0.3);
+    border: solid rgb(149, 0, 0);
+}
+
+/* No Background Class */
 .correct.no-background, .incorrect.no-background {
-    background-color: transparent; /* Remove background */
-    border-color: transparent; /* Remove border color */
+    background-color: transparent;
+    border-color: transparent;
 }

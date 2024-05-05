@@ -11,14 +11,18 @@
 
 <body>
   <h1>Deep Learning EA 1: Image Classification with ml5</h1>
-  <p style="padding-left:10px; padding-bottom:10px">This page was built for the module Deep Learning and it showcases the image classification with ml5. <br>
-    To get a first understanding about the model and its limitations, you can have a look at the <b>Image Classification Examples</b>. <br>
-    After that, the model can be tested with your own images in the section <b>Image Classification – Test your own image</b>. <br>
-    Lastly, you can find a short <b>Discussion</b> about the learnings and a <b>Documentation </b> about this project. </p>
+  <p style="padding-left:10px; padding-bottom:10px">This page was built for the module Deep Learning and it showcases
+    the image classification with ml5. <br>
+    To get a first understanding about the model and its limitations, you can have a look at the <b>Image Classification
+      Examples</b>. <br>
+    After that, the model can be tested with your own images in the section <b>Image Classification – Test your own
+      image</b>. <br>
+    Lastly, you can find a short <b>Discussion</b> about the learnings and a <b>Documentation </b> about this project.
+  </p>
   <button id="examples" class="accordion">Image Classification Examples</button>
   <div class="panel">
     <p><b>Examples for correct Classification</b><br>
-The following three images are examples for correct classification by the model.</p>
+      The following three images are examples for correct classification by the model.</p>
     <table>
       <tr>
         <td>
@@ -30,9 +34,9 @@ The following three images are examples for correct classification by the model.
               <div class="loading-container" id="loading-container">
                 <div class="spinner"></div>
                 <div id="loading-message">Loading...</div>
+              </div>
+              <div id="result1"></div>
             </div>
-            <div id="result1"></div>
-          </div>
             <canvas id="results1"></canvas>
           </div>
         </td>
@@ -45,9 +49,9 @@ The following three images are examples for correct classification by the model.
               <div class="loading-container" id="loading-container2">
                 <div class="spinner"></div>
                 <div id="loading-message">Loading...</div>
+              </div>
+              <div id="result2"></div>
             </div>
-            <div id="result2"></div>
-          </div>
             <canvas id="results2"></canvas>
           </div>
         </td>
@@ -61,9 +65,9 @@ The following three images are examples for correct classification by the model.
               <div class="loading-container" id="loading-container3">
                 <div class="spinner"></div>
                 <div id="loading-message">Loading...</div>
+              </div>
+              <div id="result3"></div>
             </div>
-            <div id="result3"></div>
-          </div>
             <canvas id="results3"></canvas>
           </div>
         </td>
@@ -80,9 +84,9 @@ The following three images are examples for correct classification by the model.
               <div class="loading-container" id="loading-container4">
                 <div class="spinner"></div>
                 <div id="loading-message">Loading...</div>
+              </div>
+              <div id="result4"></div>
             </div>
-            <div id="result4"></div>
-          </div>
             <canvas id="results4"></canvas>
           </div>
         </td>
@@ -95,9 +99,9 @@ The following three images are examples for correct classification by the model.
               <div class="loading-container" id="loading-container5">
                 <div class="spinner"></div>
                 <div id="loading-message">Loading...</div>
+              </div>
+              <div id="result5"></div>
             </div>
-            <div id="result5"></div>
-          </div>
             <canvas id="results5"></canvas>
           </div>
         </td>
@@ -112,9 +116,9 @@ The following three images are examples for correct classification by the model.
               <div class="loading-container" id="loading-containe6r">
                 <div class="spinner"></div>
                 <div id="loading-message">Loading...</div>
+              </div>
+              <div id="result6"></div>
             </div>
-            <div id="result6"></div>
-          </div>
             <canvas id="results6"></canvas>
           </div>
         </td>
@@ -140,36 +144,40 @@ The following three images are examples for correct classification by the model.
           <div style="padding-top: 5px;"></div>
           <span class="hint">Upload is restricted to images only (e.g.: .png, .jpg, .jpeg)</span>
           <div class="buttons">
-
-            <button type="button" id="classify-btn" disabled>Classify Image</button>
-            <button type="button" id="reset-btn" disabled>Reset</button>
+            <button type="button" id="reset-btn" disabled>Reset
+              <span class="tooltip">Please upload an image first to activate the button.</span>
+            </button>
+            <button type="button" id="classify-btn" disabled>Classify Image
+              <span class="tooltip">Please upload an image first to classify it.</span>
+            </button>
           </div>
           <div style="padding-top: 50px;">
             <label id="uploaded-image-label">Your uploaded Image</label>
-            <div id="no-image-uploaded" class="hint" style="padding-top: 10px">No image uploaded. Please add an image to the drop zone.</div>
+            <div id="no-image-uploaded" class="hint" style="padding-top: 10px">No image uploaded. Please add an image to
+              the drop zone.</div>
             <div style="padding-bottom: 20px;"></div>
             <img id="uploaded-image" src="" alt="Uploaded Image" style="display: none;">
-        </div>
-        
+          </div>
+
         </td>
         <td>
           <label>Classification Result</label>
           <div style="padding-top: 16px;">
-            </div>
-            <div id="result7"></div>
-            <canvas id="results7" height="50"></canvas>
           </div>
-        </td>
-      </tr>
-    </table>
+          <div id="result7"></div>
+          <canvas id="results7" height="50"></canvas>
+  </div>
+  </td>
+  </tr>
+  </table>
 
   </div>
   <button class="accordion">Discussion</button>
   <div class="panel">
     <p>While implementing the image classification it became obvious, that the classification results vary depending on
       the content and quality of the images.
-      For example, the model may correctly classify clear images of most known categories like animals or vehicles.
-      However, the model may struggle with less clear images, or those representing less common classes.
+      For example, the model may correctly classify clear images with calm backgrounds of most known categories like animals or vehicles.
+      However, the model may struggle with images representing less common classes (e.g. "Retro Baby Buggy") or images that have a busy background, so that the main object of the image cannot be identified correctly.
       Unexpectedly, there is also a limitation for some known categories (e.g. horse images).
       This can be due to the model's training data and its ability to recognize specific features in the images.
       Additionally, images with unusual angles, lighting, or backgrounds may challenge the model's accuracy.
@@ -180,8 +188,13 @@ The following three images are examples for correct classification by the model.
 
   <button class="accordion">Documentation</button>
   <div class="panel">
-    <h3>Frameworks & Technologies</h3>
-    <ul style="line-height: 26px;">
+    <h2>General</h2>
+    <p style="padding-bottom: 20"> This code demonstrates the use of the ml5 library to classify images using MobileNet
+      and Chart.js for visualizing classification results.
+      It provides a user interface with different interactions (e.g. dropzone and upload-link to upload an image for
+      classification, accordions to structure the webpage).</p>
+    <h2>Frameworks & Technologies</h2>
+    <ul style="padding-bottom: 20">
       <li><b>ml5.js:</b> In this code, ml5 is used to load and use the MobileNet model for image classification.</li>
       <li><b>chart.js: </b>Chart.js library is used to create the bar charts to display the classification results
         graphically in canvas elements.</li>
@@ -193,17 +206,67 @@ The following three images are examples for correct classification by the model.
       <li><b>CSS: </b>CSS takes care of the styling of the user interface (e.g. of the appearance of elements, providing
         visual feedback on user interactions). </li>
     </ul>
-    <h3>Further Documentation</h3>
-    <p>: Erläutern Sie Ihre Implementierung der Logik und alles, was für ihre Lösung wichtig ist (Ansatz, Resultate,
-      Quellen, etc.)<br>
-    <h3>Sources</h3>
-    <ul style="line-height: 26px;">
-    <li>Horse:</b> https://www.ehorses.de/magazin/wp-content/uploads/Quarter-Horse-Portrait-1024x731.jpg </li>
-    <li><b>Toucan:</b> https://www.pbs.org/wnet/nature/files/2022/05/zdenek-machacek-eqXiLNfZDc0-unsplash-scaled-e1653519355914.jpg </li>
-    <li><b>Ladybug:</b> https://www.bund.net/fileadmin/_processed_/c/c/csm-marienkaefer-tipp-august-2017-6ccecdc5f7.jpg </li>
-    <li><b>Soccer:</b> https://www.berliner-fussball.de/fileadmin/user_upload/spielbetrieb/Foto-Dateien/sr_pictures_1_2013_10234.jpg </li>
-    <li><b>Colloseum:</b> https://www.escapeaway.dk/rejseblog/wp-content/uploads/2021/01/colosseum_rom_italien_ss_3.jpeg</li>
-    <li><b>Buggy:</b> https://meinkinderwagen.com/wp-content/uploads/2020/11/Classico-retro-kinderwagen-nostalgie-romantik-1-1024x683.jpg</li>
+    <h2>Further Documentation</h2>
+
+    Functions
+    <ul style="padding-bottom: 20">
+      <li><b>initializeModelAndChart():</b>
+        This function initializes the MobileNet model using the ml5 library and the Chart.js bar charts for each canvas
+        in the canvasIDs array (for every canvas that is diplayed) so that the classification results can be displayed.
+      </li>
+      <li><b>setLoadingState(isLoading):</b>
+        This function takes care of showing or hiding and styling the loading state for when the classification result
+        is loading.</li>
+      <li><b>handleFileUpload(event):</b>
+        This function handles the file upload events regarding the dropzone or file browser upload and reads the
+        image-file using a FileReader.
+        Once an image is uploaded and processed, it updates the user interface and enables the classification.</li>
+      <li><b>classifyAndDisplayResults(imageElement, canvasId):</b>
+        This function classifies the images using the MobileNet model. After the classification, the corresponding bar
+        chart (with the help of the updateChart-function) and result-divs are updated through this function.</li>
+      <li><b>updateChart(results, canvasId):</b>
+        This function takes care of the update of the bar charts, as it sets chart labels and the data based on the
+        classification results.</li>
+      <li><b>reset():</b>
+        This helps to reset states if needed, e.g. for clearing uploaded images and classification results when the
+        "Reset-Button is clicked.
+        It also disables the "Classify Image" and "Reset" button on click of "Reset".</li>
+    </ul>
+    Event Listeners
+    <ul style="padding-bottom: 20">
+      <li><b>DOMContentLoaded:</b>
+        Initializes the MobileNet model and Chart.js bar charts when the document loads.
+        Sets up event listeners for buttons, file upload, drag-and-drop, and accordions.</li>
+      <li><b>classifyBtn:</b>
+        Listens for clicks on the "Classify Image" button, triggers classification and displays results.</li>
+      <li><b>resetBtn:</b>
+        Listens for clicks on the "Reset" button to resets the uploaded image, shown result and bar chart.</li>
+      <li><b>examplesBtn:</b>
+        Classifies the example images on button click.</li>
+      <li><b>upload-link:</b>
+        Opens a file input dialog for image uploads.</li>
+      <li><b>dropzone:</b>
+        Handles drag-and-drop functionality for image uploads.</li>
+      <li><b>accordions:</b>
+        Handles the accordion toggle functionality for displaying and hiding content panels.
+      </li>
+    </ul>
+    <h2>Sources</h2>
+    <ul style="padding-bottom: 20">
+      <li><b>Horse:</b> https://www.fundis-reitsport.de/blog/wp-content/uploads/2022/10/Paint-Horse.jpg </li>
+      <li><b>Toucan:</b>
+        https://www.pbs.org/wnet/nature/files/2022/05/zdenek-machacek-eqXiLNfZDc0-unsplash-scaled-e1653519355914.jpg
+      </li>
+      <li><b>Ladybug:</b>
+        https://www.bund.net/fileadmin/_processed_/c/c/csm-marienkaefer-tipp-august-2017-6ccecdc5f7.jpg </li>
+      <li><b>Soccer:</b>
+        https://www.berliner-fussball.de/fileadmin/user_upload/spielbetrieb/Foto-Dateien/sr_pictures_1_2013_10234.jpg
+      </li>
+      <li><b>Colloseum:</b>
+        https://www.escapeaway.dk/rejseblog/wp-content/uploads/2021/01/colosseum_rom_italien_ss_3.jpeg</li>
+      <li><b>Buggy:</b>
+        https://meinkinderwagen.com/wp-content/uploads/2020/11/Classico-retro-kinderwagen-nostalgie-romantik-1-1024x683.jpg
+      </li>
 
   </div>
   <script src="sketch.js"></script>
