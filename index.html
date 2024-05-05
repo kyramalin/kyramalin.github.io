@@ -9,102 +9,110 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div>
       <h1>Deep Learning EA 1: Bilderkennung mit ml5</h1>
-      <h2>Example classification</h2>
-          <label>Example for correct classification</label>
-          <p>Click the images below to display the classification result. All three images in this section will be classified correctly by the model. </p>
-          <table>
-            <tr>
-              <td>
-                  <img onclick="selectImage(this)" src="images/cat.png">
-              </td>
-              <td>
-                  <div id="result1">
-                      <canvas id="results1"></canvas>
-                  </div>
-              </td>
+      <button class="accordion">Image Classification Examples</button>
+      <div class="panel">
+        <p><b>Examples for correct Classification</b></p>
+        <p>The following three images are examples for correct classification by the model.</p>
+        <table>
+          <tr>
+            <td>
+                <img onclick="selectImage(this)" src="images/cat.png">
+            </td>
+            <td>
+                <div id="result1">
+                    <canvas id="results1"></canvas>
+                </div>
+            </td>
+        </tr>
+          <tr>
+            <td><img onclick="selectImage(this)" src="images/horse.png"></td>
+            <td><div id="result2">
+              <canvas id="results2"></canvas>
+            </div></td>
           </tr>
-            <tr>
-              <td><img onclick="selectImage(this)" src="images/horse.png"></td>
-              <td><div id="result2">
-                <canvas id="results2"></canvas>
-              </div></td>
-            </tr>
-            <tr>
-              <td><img onclick="selectImage(this)" src="images/bird.png"></td>
-              <td><div id="result3">
-                <canvas id="results3"></canvas>
-              </div></td>
-            </tr>
-        </table>
-          <label>Example for false classification</label>
-          <p>Click the images below to display the classification result. All three images in this section will be classified incorrectly by the model. </p>
-          <table>
-            <tr>
-              <td><img onclick="selectImage(this)" src="images/apple.png"></td>
-              <td><div id="result4">
-                <canvas id="results4"></canvas>
-              </div></td>
-            </tr>
-            <tr>
-              <td><img onclick="selectImage(this)" src="images/car.png"></td>
-              <td><div id="result5">
-                <canvas id="results5"></canvas>
-              </div></td>
-            </tr>
-            <tr>
-              <td><img onclick="selectImage(this)" src="images/chair.png"></td>
-              <td><div id="result6">
-                <canvas id="results6"></canvas>
-              </div></td>
-            </tr>
-        </table>
-        </div>
-  <div>
-    <h2>Image Classification</h2>
-    <p>Upload your own image for classification.</p>
-     <div class="container">
-    <div class="column">
-          <div id="dropzone">
+          <tr>
+            <td><img onclick="selectImage(this)" src="images/bird.png"></td>
+            <td><div id="result3">
+              <canvas id="results3"></canvas>
+            </div></td>
+          </tr>
+      </table>
+        <p><b>Examples for false Classification</b></p>
+        <p>The following three images are examples for incorrect classification by the model.</p>
+        <table>
+          <tr>
+            <td><img onclick="selectImage(this)" src="images/apple.png"></td>
+            <td><div id="result4">
+              <canvas id="results4"></canvas>
+            </div></td>
+          </tr>
+          <tr>
+            <td><img onclick="selectImage(this)" src="images/car.png"></td>
+            <td><div id="result5">
+              <canvas id="results5"></canvas>
+            </div></td>
+          </tr>
+          <tr>
+            <td><img onclick="selectImage(this)" src="images/chair.png"></td>
+            <td><div id="result6">
+              <canvas id="results6"></canvas>
+            </div></td>
+          </tr>
+      </table>
+      </div>
+
+      <button class="accordion">Image Classification – Upload your own Image</button>
+      <div class="panel">
+        <p>In this section you can add your own image for classification by the model. You can either drag your image into the dropzone or select your image from your file browser.</p>
+        <table>
+          <tr>
+            <td>
+             <div id="dropzone">
               <p>Drop image here or 
                   <span id="upload-link">upload files</span>
               </p>
           </div>
           <div class="buttons">
-              <button id="classify-btn" disabled>Classify Image</button>
-              <button id="reset-btn" disabled>Reset</button>
+            <button type="button" id="classify-btn" disabled>Classify Image</button>
+              <button type="button" id="reset-btn" disabled>Reset</button>
           </div>
       <img id="uploaded-image" src="" alt="Uploaded Image">
-  
-    </div>
-      <div>
-        <label>Result</label>
-        <div id="result"></div>
-        <canvas id="results" width="60" height="60"></canvas>
+ 
+            </td>
+            <td>
+              <div>
+                <div id="result7"></div>
+                <canvas id="results7"></canvas>
+              </div>
+            </td>
+        </tr>
+      </table>
+ 
+       </div>
+
+      
+      <button class="accordion">Documentation</button>
+      <div class="panel">
+        <p>Auf dieser Seite können Bilder mithilfe des ml5.js Frameworks klassifiziert werden.
+            Der Nutzer hat dabei die Möglichkeit Bilder hochzuladen, per Drag&Drop in den markierten
+            Bereich zu ziehen oder eines der vorgeschlagenen Bilder auszuwählen. Neben dem Bild wird
+            anschließend ein Diagramm dargestellt. Aus diesem lassen sich die sechs wahrscheinlichsten 
+            Klassifikationen und deren Wahrscheinlichkeiten ablesen.
+        </p>
       </div>
-  </div>
-  </div>
-  <div>
-    <h2>Dokumentation</h2>
-    <h3>Übersicht</h3>
-    <p>Auf dieser Seite können Bilder mithilfe des ml5.js Frameworks klassifiziert werden.
-        Der Nutzer hat dabei die Möglichkeit Bilder hochzuladen, per Drag&Drop in den markierten
-        Bereich zu ziehen oder eines der vorgeschlagenen Bilder auszuwählen. Neben dem Bild wird
-        anschließend ein Diagramm dargestellt. Aus diesem lassen sich die sechs wahrscheinlichsten 
-        Klassifikationen und deren Wahrscheinlichkeiten ablesen.
-    </p>
-    <h3>Verwendete Frameworks</h3>
-    <p>ml5.js, chart.js, p5.js, Bootstrap</p>
-    <h3>Bildquellen</h3>
-    <p>Katze: https://www.reddit.com/r/aww/comments/l3c3xi/cat/ <br>
-        Pferd: https://www.haustiermagazin.com/pferderassen/shire-horse/ <br>
-        Tukan: https://de.wikipedia.org/wiki/Tukane <br>
-        Apfel: https://ceklog.kindel.com/2013/02/19/why-nobody-can-copy-apple/ <br>
-        Auto: https://autoportal.com/newcars/marutisuzuki/ignis/ <br>
-        Stuhl: https://www.connox.de/kategorien/moebel/stuehle/frankfurter-stuhl.html</p>
-    </div>
-</div>
+      <button class="accordion">Frameworks & Sources</button>
+      <div class="panel">
+        <h3>Frameworks</h3>
+        <p>ml5.js, chart.js, p5.js, Bootstrap</p>
+        <h3>Sources</h3>
+        <p>Katze: https://www.reddit.com/r/aww/comments/l3c3xi/cat/ <br>
+            Pferd: https://www.haustiermagazin.com/pferderassen/shire-horse/ <br>
+            Tukan: https://de.wikipedia.org/wiki/Tukane <br>
+            Apfel: https://ceklog.kindel.com/2013/02/19/why-nobody-can-copy-apple/ <br>
+            Auto: https://autoportal.com/newcars/marutisuzuki/ignis/ <br>
+            Stuhl: https://www.connox.de/kategorien/moebel/stuehle/frankfurter-stuhl.html</p>
+      </div>
   <script src="sketch.js"></script>
 </body>
 </html>

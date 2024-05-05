@@ -25,38 +25,41 @@ table td:last-child {
     width: 60%; /* The right cell takes up 60% of the table width */
 }
 
-
 img{
     height: 150px; 
 }
 
 canvas{
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
 }
 
 h1{
 	font-weight: bold;
 	color: #dedede;
-    font-size: 45px;
+    font-size: 35px;
     padding-bottom: 20px;
 }
 
 h2{
-	font-size: 25pt;
+	font-size: 20pt;
 	font-weight: bold;
 }
 
 label{
-    font-size: 20px;
+    font-size: 15px;
 	font-weight: bold;
-	color: #b2c0d6;
+}
+
+p{
+    font-size: 15px;
+    line-height: 23px; 
 }
 
 #dropzone {
     border: 1px dashed #838383;
     border-radius: 20px;
-    padding: 40px;
+    padding: 50px;
 	box-sizing: border-box; /* Ensures padding and border are included in width */
     width: 100%;
 text-align: center;
@@ -89,7 +92,7 @@ cursor: pointer;
 }
 
 .buttons {
-    margin-top: 20px;
+    margin-top: 16px;
 	display: flex; /* Uses flexbox layout */
     justify-content: space-between; /* Spreads the buttons evenly */
     width: 100%; /* Matches the width of the dropzone */
@@ -97,8 +100,9 @@ cursor: pointer;
 }
 
 button {
+    font-size: 14px;
     margin: 5px;
-    padding: 10px 20px;
+    padding: 10px;
     border-radius: 5px;
     border: none;
     background-color: rgb(107, 156, 224);
@@ -109,8 +113,7 @@ button {
 }
 
 button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
+    background-color: #a5a5a5;
 }
 
 button:not(:disabled):hover {
@@ -134,3 +137,44 @@ button:not(:disabled):hover {
     mix-blend-mode:normal;
     z-index: 11;
 }
+
+/* CSS for accordion */
+.accordion {
+    background-color: #27282b;
+    color: #fff;
+    cursor: pointer;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 24px;
+    padding-right: 24px;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+    transition: 0.4s;
+  }
+  
+  .active, .accordion:hover {
+    background-color: #191a1d; 
+  }
+  
+  .panel {
+    padding-top: 5px;
+    padding-left: 28px;
+    padding-right: 28px;
+    display: none;
+    overflow: hidden;
+  }
+
+  .accordion:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+  }
+  
+  .active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+  }
+  
