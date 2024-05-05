@@ -176,16 +176,18 @@ button:not(:disabled):hover {
   .active:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
   }
-  
-  .spinner {
-    width: 24px;
-    height: 24px;
-    border: 4px solid #ccc;
-    border-top: 4px solid #007BFF; /* Change color as desired */
+
+/* Define the spinner styles */
+.spinner {
+    width: 12px;
+    height: 12px;
+    float:left;
+    border: 4px solid #686868;
+    border-top: 4px solid #5ca9fa; /* Change color as desired */
     border-radius: 50%;
     animation: spin 1s linear infinite;
-  }
-  
+    margin-right: 15px; /* Add some spacing between the message and the spinner */
+}
   /* Define the spinning animation */
   @keyframes spin {
     from {
@@ -212,10 +214,19 @@ button:not(:disabled):hover {
 }
 
 .correct{
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px; 
+    padding-left: 20px;
+    padding-right: 20px; 
     background-color: rgba(4, 168, 28, 0.3);
-    border-color: rgb(4, 168, 28);
     border:solid;
+    border-color: rgb(1, 139, 22);
     border-radius: 10px;
     border-width: 1px; 
+}
+
+/* Define the 'no-background' class */
+.correct.no-background {
+    background-color: transparent; /* Remove background */
+    border-color: transparent; /* Remove border color */
 }

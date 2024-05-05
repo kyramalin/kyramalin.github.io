@@ -67,46 +67,63 @@ function modelReady() {
     // Disable classify button initially until an image is uploaded
     classifyBtn.disabled = true;
 }
+
+// Function to toggle loading state
+function setLoadingState(isLoading) {
+    const correctContainer = document.getElementById('correct-container');
+
+    if (isLoading) {
+        // Show loading spinner and message
+        showLoading();
+
+        // Add 'no-background' class to remove background and border color
+        correctContainer.classList.add('no-background');
+    } else {
+        // Hide loading spinner and message
+        hideLoading();
+
+        // Remove 'no-background' class to restore original styles
+        correctContainer.classList.remove('no-background');
+    }
+}
+
 // Function to show the loading message and spinner
 function showLoading() {
-  document.getElementById('loading-container').style.display = 'block';
+    document.getElementById('loading-container').style.display = 'block';
 }
 
 // Function to hide the loading message and spinner
 function hideLoading() {
-  document.getElementById('loading-container').style.display = 'none';
+    document.getElementById('loading-container').style.display = 'none';
 }
 
-// Update the classifyAndDisplayResults function to show the loading spinner
+// Function to classify an image and display results
 function classifyAndDisplayResults(imageElement, canvasId) {
-  // Show loading spinner and message
-  showLoading();
+    // Set loading state to active
+    setLoadingState(true);
 
-  mobilenet.classify(imageElement, (error, results) => {
-      // Hide loading spinner and message once classification is done
-      hideLoading();
+    mobilenet.classify(imageElement, (error, results) => {
+        // Set loading state to inactive
+        setLoadingState(false);
 
-      if (error) {
-          console.error(error);
-          return;
-      }
+        if (error) {
+            console.error(error);
+            return;
+        }
 
-      // Find the appropriate result div
-      const resultDivId = `result${canvasId.replace('results', '')}`;
-      const resultDiv = document.getElementById(resultDivId);
-      if (resultDiv) {
-          resultDiv.innerHTML = `Image classified as: ${results[0].label} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
-      } else {
-          console.error(`Could not find result div with ID: ${resultDivId}`);
-      }
+        // Find the appropriate result div
+        const resultDivId = `result${canvasId.replace('results', '')}`;
+        const resultDiv = document.getElementById(resultDivId);
+        if (resultDiv) {
+            resultDiv.innerHTML = `Image classified as: ${results[0].label} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
+        } else {
+            console.error(`Could not find result div with ID: ${resultDivId}`);
+        }
 
-      // Update the bar chart in the specified canvas
-      updateChart(results, canvasId);
-  });
+        // Update the bar chart in the specified canvas
+        updateChart(results, canvasId);
+    });
 }
-
-// Call your classifyAndDisplayResults function as needed
-
 
 // Update the specified bar chart with classification results
 function updateChart(results, canvasId) {
@@ -127,22 +144,24 @@ function updateChart(results, canvasId) {
 function handleFileUpload(event) {
     const files = event.target.files || event.dataTransfer.files;
     const file = files[0];
-    
+
     // Ensure the classify button is disabled until the image is uploaded and loaded
     classifyBtn.disabled = true;
 
     if (file && file.type.startsWith("image/")) {
         const reader = new FileReader();
-        
+
         reader.onload = function (e) {
             uploadedImage = new Image();
             uploadedImage.onload = function () {
                 const uploadedImageElement = document.getElementById('uploaded-image');
-                const uploadedImageLabel = document.getElementById('uploaded-image-label'); // Get the label element
+                const uploadedImageLabel = document.getElementById('uploaded-image-label');
+                
                 if (uploadedImageElement && uploadedImageLabel) {
                     uploadedImageElement.src = e.target.result;
-                    uploadedImageElement.style.display = "block";
-                    uploadedImageLabel.style.display = "block"; // Show the label
+                    uploadedImageElement.style.display = 'block';
+                    uploadedImageLabel.style.display = 'block';
+                    
                     // Enable classify button once image is loaded
                     classifyBtn.disabled = false;
                     resetBtn.disabled = false;
@@ -153,10 +172,11 @@ function handleFileUpload(event) {
 
         reader.readAsDataURL(file);
     } else {
-        alert("Only images are allowed.");
+        alert('Only images are allowed.');
     }
 }
 
+// Function to reset the application state
 function reset() {
     const uploadedImageElement = document.getElementById('uploaded-image');
     const uploadedImageLabel = document.getElementById('uploaded-image-label');
@@ -169,7 +189,7 @@ function reset() {
     if (uploadedImageLabel) {
         uploadedImageLabel.style.display = 'none';
     }
-    
+
     // Disable classify and reset buttons
     classifyBtn.disabled = true;
     resetBtn.disabled = true;
@@ -194,7 +214,6 @@ function reset() {
     });
 }
 
-
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize the model and charts
@@ -214,17 +233,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-        // Event listener for the examples button
-        const examplesBtn = document.getElementById('examples');
-        examplesBtn.addEventListener('click', function() {
-            // Load images onto canvas 1 to 6 when the button is clicked
-            for (let i = 1; i <= 6; i++) {
-                const imageElement = document.getElementById(`image${i}`);
-                const canvasId = `results${i}`;
-                console.log("image", imageElement, "canvasid", canvasId);
-                classifyAndDisplayResults(imageElement, canvasId);
-            }
-        });
+    // Event listener for examples button
+    const examplesBtn = document.getElementById('examples');
+    examplesBtn.addEventListener('click', function() {
+        // Load images onto canvas 1 to 6 when the button is clicked
+        for (let i = 1; i <= 6; i++) {
+            const imageElement = document.getElementById(`image${i}`);
+            const canvasId = `results${i}`;
+            classifyAndDisplayResults(imageElement, canvasId);
+        }
+    });
 
     // Event listener for reset button
     resetBtn.addEventListener('click', reset);
@@ -239,6 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fileInputElement.click();
     });
 
+    // Event listeners for dropzone
     const dropzone = document.getElementById('dropzone');
     dropzone.addEventListener('dragover', function(e) {
         e.preventDefault();
@@ -256,10 +275,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add accordion functionality
-    const accordions = document.getElementsByClassName("accordion");
+    const accordions = document.getElementsByClassName('accordion');
     for (let i = 0; i < accordions.length; i++) {
         accordions[i].addEventListener('click', function() {
-            this.classList.toggle("active");
+            this.classList.toggle('active');
             const panel = this.nextElementSibling;
             panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
         });
