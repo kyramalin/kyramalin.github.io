@@ -3,7 +3,6 @@
   <meta charset="UTF-8">
   <title>Deep Learning EA 1</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
   <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/ml5@latest/dist/ml5.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -17,7 +16,7 @@
         <table>
           <tr>
             <td>
-                <img onclick="selectImage(this)" src="images/cat.png">
+                <img onclick="selectImage(this)" src="https://www.tierchenwelt.de/images/stories/haustiere/pferde/quarter_horse_paddock_l.jpg">
             </td>
             <td>
               <div id="loading-container" style="display: none;">
@@ -78,7 +77,9 @@
             </div></td>
           </tr>
           <tr>
-            <td><img onclick="selectImage(this)" src="images/chair.png"></td>
+            <td>
+              <img onclick="selectImage(this)" src="images/chair.png">
+            </td>
             <td>
               <div id="loading-container" style="display: none;">
                 <div id="loading-spinner" class="spinner"></div>
@@ -94,9 +95,12 @@
       <button class="accordion">Image Classification – Upload your own Image</button>
       <div class="panel">
         <p>In this section you can add your own image to classify by the model. You can either drag your image into the dropzone or select your image from your file browser.</p>
-        <table>
+        <table style="padding-top: 20px;">
           <tr>
             <td style="vertical-align: top;">
+              <label>Drop your Image here</label>
+              
+              <div style="padding-top: 16px;" ></div>
              <div id="dropzone">
               <p>Drop image here or 
                   <span id="upload-link">upload files</span>
@@ -108,11 +112,14 @@
               <button type="button" id="reset-btn" disabled>Reset</button>
           </div>
           <div style="padding-top: 50px;">
+            <label id="uploaded-image-label" style="display: none;">Your uploaded Image</label>
+            <div style="padding-bottom: 20px;" ></div>
       <img id="uploaded-image" src="" alt="Uploaded Image">
     </div>
             </td>
             <td>
-              <div>
+              <label>Classification Result</label>
+              <div style="padding-top: 16px;">
                 <div id="loading-container" style="display: none;">
                   <div id="loading-spinner" class="spinner"></div>
                   <div id="loading-text">Classification Loading...</div>
@@ -128,25 +135,28 @@
        </div>
        <button class="accordion">Discussion</button>
        <div class="panel">
-         <p>Auf dieser Seite können Bilder mithilfe des ml5.js Frameworks klassifiziert werden.
-             Der Nutzer hat dabei die Möglichkeit Bilder hochzuladen, per Drag&Drop in den markierten
-             Bereich zu ziehen oder eines der vorgeschlagenen Bilder auszuwählen. Neben dem Bild wird
-             anschließend ein Diagramm dargestellt. Aus diesem lassen sich die sechs wahrscheinlichsten 
-             Klassifikationen und deren Wahrscheinlichkeiten ablesen.
+         <p>While implementing the image classification it became obvious, that the classification results vary depending on the content and quality of the images. 
+          For example, the model may correctly classify clear images of most known categories like animals or vehicles. However, the model may struggle with less clear images, or those representing less common classes. 
+          Unexpectedly, there is also a limitation for some known categories (e.g. horse images). 
+          This can be due to the model's training data and its ability to recognize specific features in the images. Additionally, images with unusual angles, lighting, or backgrounds may challenge the model's accuracy.  
+          Overall, the main learning was about the potential and limitations of machine learning models in classifying images.
          </p>
        </div>
       
       <button class="accordion">Documentation</button>
       <div class="panel">
-        <h3>Frameworks</h3>
-        <p>ml5.js, chart.js, p5.js, Bootstrap</p>
+        <h3>Frameworks & Technologies</h3>
+        <ul style="line-height: 26px;">
+          <li><b>ml5.js:</b> In this code, ml5 is used to load and use the MobileNet model for image classification.</li>
+          <li><b>chart.js: </b>Chart.js library is used to create the bar charts to display the classification results graphically in canvas elements.</li>
+          <li><b>JavaScript: </b>With JavaScript interactivity and functionality is added, enabling actions like image classification using ml5.js, rendering bar charts with Chart.js, handling file uploads, and responding to user events like button clicks and file drops.</li>
+          <li><b>HTML: </b>HTML provides the structure for the user interface, including elements such as buttons, divs, and canvases.</li>
+          <li><b>CSS: </b>CSS takes care of the styling of the user interface (e.g. of the appearance of elements, providing visual feedback on user interactions). </li>
+        </ul>
+        <h3>Further Documentation</h3>
+        <p>: Erläutern Sie Ihre Implementierung der Logik und alles, was für ihre Lösung wichtig ist (Ansatz, Resultate, Quellen, etc.)<br>
         <h3>Sources</h3>
-        <p>Katze: https://www.reddit.com/r/aww/comments/l3c3xi/cat/ <br>
-            Pferd: https://www.haustiermagazin.com/pferderassen/shire-horse/ <br>
-            Tukan: https://de.wikipedia.org/wiki/Tukane <br>
-            Apfel: https://ceklog.kindel.com/2013/02/19/why-nobody-can-copy-apple/ <br>
-            Auto: https://autoportal.com/newcars/marutisuzuki/ignis/ <br>
-            Stuhl: https://www.connox.de/kategorien/moebel/stuehle/frankfurter-stuhl.html</p>
+        <p>Horse: https://www.tierchenwelt.de/images/stories/haustiere/pferde/quarter_horse_paddock_l.jpg <br>
       </div>
   <script src="sketch.js"></script>
 </body>

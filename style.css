@@ -51,7 +51,7 @@ label{
 	font-weight: bold;
 }
 
-p{
+p, li{
     font-size: 15px;
     line-height: 23px; 
 }
@@ -67,12 +67,11 @@ text-align: center;
 
 #dropzone:hover {
 background-color: rgb(107, 156, 224, 0.1);
-cursor: pointer;
 }
 
 #upload-link {
     text-decoration: underline;
-    cursor: default;
+    cursor: pointer;
     color: rgb(107, 156, 224);
 }
 
