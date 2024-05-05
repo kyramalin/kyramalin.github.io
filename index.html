@@ -93,21 +93,23 @@
 
       <button class="accordion">Image Classification – Upload your own Image</button>
       <div class="panel">
-        <p>In this section you can add your own image for classification by the model. You can either drag your image into the dropzone or select your image from your file browser.</p>
+        <p>In this section you can add your own image to classify by the model. You can either drag your image into the dropzone or select your image from your file browser.</p>
         <table>
           <tr>
-            <td>
+            <td style="vertical-align: top;">
              <div id="dropzone">
               <p>Drop image here or 
                   <span id="upload-link">upload files</span>
               </p>
           </div>
           <div class="buttons">
+            
             <button type="button" id="classify-btn" disabled>Classify Image</button>
               <button type="button" id="reset-btn" disabled>Reset</button>
           </div>
+          <div style="padding-top: 50px;">
       <img id="uploaded-image" src="" alt="Uploaded Image">
- 
+    </div>
             </td>
             <td>
               <div>
@@ -115,27 +117,26 @@
                   <div id="loading-spinner" class="spinner"></div>
                   <div id="loading-text">Classification Loading...</div>
               </div>  
-              
+
                 <div id="result7"></div>
-                <canvas id="results7"></canvas>
+                <canvas id="results7" height="50"></canvas>
               </div>
             </td>
         </tr>
       </table>
  
        </div>
-
+       <button class="accordion">Discussion</button>
+       <div class="panel">
+         <p>Auf dieser Seite können Bilder mithilfe des ml5.js Frameworks klassifiziert werden.
+             Der Nutzer hat dabei die Möglichkeit Bilder hochzuladen, per Drag&Drop in den markierten
+             Bereich zu ziehen oder eines der vorgeschlagenen Bilder auszuwählen. Neben dem Bild wird
+             anschließend ein Diagramm dargestellt. Aus diesem lassen sich die sechs wahrscheinlichsten 
+             Klassifikationen und deren Wahrscheinlichkeiten ablesen.
+         </p>
+       </div>
       
       <button class="accordion">Documentation</button>
-      <div class="panel">
-        <p>Auf dieser Seite können Bilder mithilfe des ml5.js Frameworks klassifiziert werden.
-            Der Nutzer hat dabei die Möglichkeit Bilder hochzuladen, per Drag&Drop in den markierten
-            Bereich zu ziehen oder eines der vorgeschlagenen Bilder auszuwählen. Neben dem Bild wird
-            anschließend ein Diagramm dargestellt. Aus diesem lassen sich die sechs wahrscheinlichsten 
-            Klassifikationen und deren Wahrscheinlichkeiten ablesen.
-        </p>
-      </div>
-      <button class="accordion">Frameworks & Sources</button>
       <div class="panel">
         <h3>Frameworks</h3>
         <p>ml5.js, chart.js, p5.js, Bootstrap</p>

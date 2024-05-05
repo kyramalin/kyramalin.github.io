@@ -19,7 +19,7 @@ function initializeModelAndChart() {
             data: {
                 labels: [],
                 datasets: [{
-                    label: 'Confidence',
+                    label: 'Classes',
                     data: [],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -67,34 +67,35 @@ function modelReady() {
     classifyBtn.disabled = false;
 }
 
-// Classify the selected image and display results in the specified canvas
 function classifyAndDisplayResults(imageElement, canvasId) {
-    // Show loading spinner and text
-    const loadingContainer = document.getElementById('loading-container');
-    loadingContainer.style.display = 'flex';
+  // Show loading spinner and text
+  const loadingContainer = document.getElementById('loading-container');
+  loadingContainer.style.display = 'flex';
 
-    mobilenet.classify(imageElement, (error, results) => {
-        // Hide loading spinner and text
-        loadingContainer.style.display = 'none';
+  mobilenet.classify(imageElement, (error, results) => {
+      // Hide loading spinner and text
+      loadingContainer.style.display = 'none';
 
-        if (error) {
-            console.error(error);
-            return;
-        }
+      if (error) {
+          console.error(error);
+          return;
+      }
 
-        // Display the classification result in the result div for the specified canvas
-        const resultDivId = `result-${canvasId}`;
-        const resultDiv = document.getElementById(resultDivId);
-        if (resultDiv) {
-            resultDiv.innerHTML = `Image classified as: ${results[0].label.split(',')[0]} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
-        } else {
-            console.error(`Could not find result div with ID: ${resultDivId}`);
-        }
+      // Find the appropriate result div
+      const resultDivId = `result${canvasId.replace('results', '')}`;
+      const resultDiv = document.getElementById(resultDivId);
+      if (resultDiv) {
+          resultDiv.innerHTML = `Image classified as: ${results[0].label} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
+      } else {
+          console.error(`Could not find result div with ID: ${resultDivId}`);
+      }
 
-        // Update the bar chart in the specified canvas
-        updateChart(results, canvasId);
-    });
+      // Update the bar chart in the specified canvas
+      updateChart(results, canvasId);
+  });
 }
+
+
 
 // Update the specified bar chart with classification results
 function updateChart(results, canvasId) {
@@ -119,20 +120,20 @@ function handleFileUpload(event) {
     if (file && file.type.startsWith("image/")) {
         const reader = new FileReader();
         
-        reader.onload = function(e) {
-            uploadedImage = new Image();
-            
-            uploadedImage.onload = function() {
-                const uploadedImageElement = document.getElementById('uploaded-image');
-                if (uploadedImageElement) {
-                    uploadedImageElement.src = e.target.result;
-                    uploadedImageElement.style.display = "block";
-                }
-                classifyBtn.disabled = false;
-                resetBtn.disabled = false;
-            };
-            uploadedImage.src = e.target.result;
-        };
+reader.onload = function(e) {
+    uploadedImage = new Image();
+    uploadedImage.onload = function() {
+        const uploadedImageElement = document.getElementById('uploaded-image');
+        if (uploadedImageElement) {
+            uploadedImageElement.src = e.target.result;
+            uploadedImageElement.style.display = "block";
+            classifyBtn.disabled = false;
+            resetBtn.disabled = false;
+        }
+    };
+    uploadedImage.src = e.target.result;
+};
+
         reader.readAsDataURL(file);
     } else {
         alert("Only images are allowed.");
@@ -225,3 +226,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+
