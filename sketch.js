@@ -70,26 +70,26 @@ function modelReady() {
 
 // Function to toggle loading state
 function setLoadingState(isLoading) {
-  // Get all containers with either the 'correct' or 'incorrect' class
-  const containers = document.querySelectorAll('.correct, .incorrect');
+    // Get all containers with either the 'correct' or 'incorrect' class
+    const containers = document.querySelectorAll('.correct, .incorrect');
 
-  if (isLoading) {
-      // Show loading spinner and message
-      showLoading();
+    if (isLoading) {
+        // Show loading spinner and message
+        showLoading();
 
-      // Add 'no-background' class to all 'correct' and 'incorrect' containers
-      containers.forEach(container => {
-          container.classList.add('no-background');
-      });
-  } else {
-      // Hide loading spinner and message
-      hideLoading();
+        // Add 'no-background' class to all 'correct' and 'incorrect' containers
+        containers.forEach(container => {
+            container.classList.add('no-background');
+        });
+    } else {
+        // Hide loading spinner and message
+        hideLoading();
 
-      // Remove 'no-background' class from all 'correct' and 'incorrect' containers
-      containers.forEach(container => {
-          container.classList.remove('no-background');
-      });
-  }
+        // Remove 'no-background' class from all 'correct' and 'incorrect' containers
+        containers.forEach(container => {
+            container.classList.remove('no-background');
+        });
+    }
 }
 
 
@@ -104,31 +104,31 @@ function hideLoading() {
 }
 
 // Function to classify an image and display results
-function classifyAndDisplayResults(imageElement, canvasId) {
-    // Set loading state to active
-    setLoadingState(true);
+function classifyAndDisplayResults(imageElement, canvasId, containerId) {
+  // Set loading state to active for the specific container
+  setLoadingState(containerId, true);
 
-    mobilenet.classify(imageElement, (error, results) => {
-        // Set loading state to inactive
-        setLoadingState(false);
+  mobilenet.classify(imageElement, (error, results) => {
+      // Set loading state to inactive for the specific container
+      setLoadingState(containerId, false);
 
-        if (error) {
-            console.error(error);
-            return;
-        }
+      if (error) {
+          console.error(error);
+          return;
+      }
 
-        // Find the appropriate result div
-        const resultDivId = `result${canvasId.replace('results', '')}`;
-        const resultDiv = document.getElementById(resultDivId);
-        if (resultDiv) {
-            resultDiv.innerHTML = `Image classified as: ${results[0].label} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
-        } else {
-            console.error(`Could not find result div with ID: ${resultDivId}`);
-        }
+      // Find the appropriate result div
+      const resultDivId = `result${canvasId.replace('results', '')}`;
+      const resultDiv = document.getElementById(resultDivId);
+      if (resultDiv) {
+          resultDiv.innerHTML = `Image classified as: ${results[0].label} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
+      } else {
+          console.error(`Could not find result div with ID: ${resultDivId}`);
+      }
 
-        // Update the bar chart in the specified canvas
-        updateChart(results, canvasId);
-    });
+      // Update the bar chart in the specified canvas
+      updateChart(results, canvasId);
+  });
 }
 
 // Update the specified bar chart with classification results
@@ -239,16 +239,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Event listener for examples button
-    const examplesBtn = document.getElementById('examples');
-    examplesBtn.addEventListener('click', function() {
-        // Load images onto canvas 1 to 6 when the button is clicked
-        for (let i = 1; i <= 6; i++) {
-            const imageElement = document.getElementById(`image${i}`);
-            const canvasId = `results${i}`;
-            classifyAndDisplayResults(imageElement, canvasId);
-        }
-    });
+// Event listener for examples button
+const examplesBtn = document.getElementById('examples');
+examplesBtn.addEventListener('click', function() {
+    // Load images onto canvas 1 to 6 when the button is clicked
+    for (let i = 1; i <= 6; i++) {
+        const imageElement = document.getElementById(`image${i}`);
+        const canvasId = `results${i}`;
+        const containerId = (i <= 3) ? 'correct-container' : 'incorrect-container'; // Change this if you want different container IDs
+        classifyAndDisplayResults(imageElement, canvasId, containerId);
+    }
+});
+
 
     // Event listener for reset button
     resetBtn.addEventListener('click', reset);
