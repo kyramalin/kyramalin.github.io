@@ -67,26 +67,46 @@ function modelReady() {
     // Disable classify button initially until an image is uploaded
     classifyBtn.disabled = true;
 }
-
-function classifyAndDisplayResults(imageElement, canvasId) {
-    mobilenet.classify(imageElement, (error, results) => {
-        if (error) {
-            console.error(error);
-            return;
-        }
-        // Find the appropriate result div
-        const resultDivId = `result${canvasId.replace('results', '')}`;
-        const resultDiv = document.getElementById(resultDivId);
-        if (resultDiv) {
-            resultDiv.innerHTML = `Image classified as: ${results[0].label} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
-        } else {
-            console.error(`Could not find result div with ID: ${resultDivId}`);
-        }
-
-        // Update the bar chart in the specified canvas
-        updateChart(results, canvasId);
-    });
+// Function to show the loading message and spinner
+function showLoading() {
+  document.getElementById('loading-container').style.display = 'block';
 }
+
+// Function to hide the loading message and spinner
+function hideLoading() {
+  document.getElementById('loading-container').style.display = 'none';
+}
+
+// Update the classifyAndDisplayResults function to show the loading spinner
+function classifyAndDisplayResults(imageElement, canvasId) {
+  // Show loading spinner and message
+  showLoading();
+
+  mobilenet.classify(imageElement, (error, results) => {
+      // Hide loading spinner and message once classification is done
+      hideLoading();
+
+      if (error) {
+          console.error(error);
+          return;
+      }
+
+      // Find the appropriate result div
+      const resultDivId = `result${canvasId.replace('results', '')}`;
+      const resultDiv = document.getElementById(resultDivId);
+      if (resultDiv) {
+          resultDiv.innerHTML = `Image classified as: ${results[0].label} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
+      } else {
+          console.error(`Could not find result div with ID: ${resultDivId}`);
+      }
+
+      // Update the bar chart in the specified canvas
+      updateChart(results, canvasId);
+  });
+}
+
+// Call your classifyAndDisplayResults function as needed
+
 
 // Update the specified bar chart with classification results
 function updateChart(results, canvasId) {
