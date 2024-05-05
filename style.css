@@ -212,7 +212,7 @@ button:not(:disabled):hover {
     margin-bottom: 10px;
 }
 
-#incorrect{
+.incorrect{
     padding: 5px;
     background-color: rgb(149, 0, 0, 0.3);
     border:solid;
@@ -221,7 +221,7 @@ button:not(:disabled):hover {
     border-width: 1px; 
 }
 
-#correct{
+.correct{
     padding: 5px;
     background-color: rgba(4, 168, 28, 0.3);
     border-color: rgb(4, 168, 28);
