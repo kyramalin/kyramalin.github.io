@@ -16,12 +16,9 @@
         <table>
           <tr>
             <td>
-                <img onclick="selectImage(this)" src="https://www.tierchenwelt.de/images/stories/haustiere/pferde/quarter_horse_paddock_l.jpg">
+                <img id="image1" src="https://www.tierchenwelt.de/images/stories/haustiere/pferde/quarter_horse_paddock_l.jpg">
             </td>
             <td>
-              <div id="loading-container" style="display: none;">
-                <div id="loading-spinner" class="spinner"></div>
-                <div id="loading-text">Classification Loading...</div>
             </div>            
                 <div id="result1">
                     <canvas id="results1"></canvas>
@@ -29,22 +26,17 @@
             </td>
         </tr>
           <tr>
-            <td><img onclick="selectImage(this)" src="images/horse.png"></td>
+            <td><img id="image2" src="images/horse.png"></td>
             <td>
-              <div id="loading-container" style="display: none;">
-                <div id="loading-spinner" class="spinner"></div>
-                <div id="loading-text">Classification Loading...</div>
             </div>  
             <div id="result2">
               <canvas id="results2"></canvas>
             </div></td>
           </tr>
           <tr>
-            <td><img onclick="selectImage(this)" src="images/bird.png"></td>
+            <td><img id="image3" src="images/bird.png"></td>
             <td>
-              <div id="loading-container" style="display: none;">
-                <div id="loading-spinner" class="spinner"></div>
-                <div id="loading-text">Classification Loading...</div>
+
             </div>  
             <div id="result3">
               <canvas id="results3"></canvas>
@@ -55,22 +47,16 @@
         <p>The following three images are examples for incorrect classification by the model.</p>
         <table>
           <tr>
-            <td><img onclick="selectImage(this)" src="images/apple.png"></td>
+            <td><img image="image4" src="images/apple.png"></td>
             <td>
-              <div id="loading-container" style="display: none;">
-                <div id="loading-spinner" class="spinner"></div>
-                <div id="loading-text">Classification Loading...</div>
             </div>  
             <div id="result4">
               <canvas id="results4"></canvas>
             </div></td>
           </tr>
           <tr>
-            <td><img onclick="selectImage(this)" src="images/car.png"></td>
+            <td><img id="image5" src="images/car.png"></td>
             <td>
-              <div id="loading-container" style="display: none;">
-                <div id="loading-spinner" class="spinner"></div>
-                <div id="loading-text">Classification Loading...</div>
             </div>  
             <div id="result5">
               <canvas id="results5"></canvas>
@@ -78,12 +64,9 @@
           </tr>
           <tr>
             <td>
-              <img onclick="selectImage(this)" src="images/chair.png">
+              <img id="image6" src="images/chair.png">
             </td>
             <td>
-              <div id="loading-container" style="display: none;">
-                <div id="loading-spinner" class="spinner"></div>
-                <div id="loading-text">Classification Loading...</div>
             </div>  
             <div id="result6">
               <canvas id="results6"></canvas>
