@@ -21,22 +21,22 @@ function initializeModelAndChart() {
                     label: 'Classes',
                     data: [],
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
+                       'rgba(100,149,237, 0.2)',
+                        'rgba(95,158,160, 0.2)',
+                        'rgba(70,130,180, 0.2)',
+                        'rgba(65,105,225, 0.2)',
+                        'rgba(60,179,113, 0.2)',
+                        'rgba(60,179,113, 0.2)',
+                        'rgba(189,183,107, 0.2)',
                     ],
                     borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 159, 64, 1)',
+                        'rgba(100,149,237, 1)',
+                        'rgba(95,158,160, 1)',
+                        'rgba(70,130,180, 1)',
+                        'rgba(65,105,225, 1)',
+                        'rgba(60,179,113, 1)',
+                        'rgba(60,179,113, 1)',
+                        'rgba(189,183,107, 1)',
                     ],
                     borderWidth: 1
                 }]
@@ -181,14 +181,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    const examplesBtn = document.getElementById('examples');
-    examplesBtn.addEventListener('click', () => {
         for (let i = 1; i <= 6; i++) {
             const imageElement = document.getElementById(`image${i}`);
             const canvasId = `results${i}`;
             classifyAndDisplayResults(imageElement, canvasId);
         }
-    });
 
     resetBtn.addEventListener('click', reset);
 

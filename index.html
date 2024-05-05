@@ -26,7 +26,7 @@
     <table>
       <tr>
         <td>
-          <img crossorigin="anonymous" id="image1" src="images/fußball.jpeg">
+          <img crossorigin="anonymous" id="image1" src="images/fußball2.jpeg">
         </td>
         <td>
           <div style="padding-top: 16px;">
@@ -77,7 +77,7 @@
       The following three images are examples for incorrect classification by the model.</p>
     <table>
       <tr>
-        <td><img crossorigin="anonymous" id="image4" src="images/kinderwagen.jpeg"></td>
+        <td><img crossorigin="anonymous" id="image4" src="images/gartenschlauch.jpeg"></td>
         <td>
           <div style="padding-top: 16px;">
             <div class="incorrect" id="correct-container4">
@@ -92,7 +92,7 @@
         </td>
       </tr>
       <tr>
-        <td><img crossorigin="anonymous" id="image5" src="/images/fußball2.jpeg"></td>
+        <td><img crossorigin="anonymous" id="image5" src="/images/colloseum.jpeg"></td>
         <td>
           <div style="padding-top: 16px;">
             <div class="incorrect" id="correct-container5">
@@ -108,7 +108,7 @@
       </tr>
       <tr>
         <td>
-          <img crossorigin="anonymous" id="image6" src="images/horse.jpeg">
+          <img crossorigin="anonymous" id="image6" src="images/fußball-kaputt.jpeg">
         </td>
         <td>
           <div style="padding-top: 16px;">
@@ -175,14 +175,12 @@
   <button class="accordion">Discussion</button>
   <div class="panel">
     <p>While implementing the image classification it became obvious, that the classification results vary depending on
-      the content and quality of the images.
-      For example, the model may correctly classify clear images with calm backgrounds of most known categories like animals or vehicles.
-      However, the model may struggle with images representing less common classes (e.g. "Retro Baby Buggy") or images that have a busy background, so that the main object of the image cannot be identified correctly.
-      Unexpectedly, there is also a limitation for some known categories (e.g. horse images).
-      This can be due to the model's training data and its ability to recognize specific features in the images.
-      Additionally, images with unusual angles, lighting, or backgrounds may challenge the model's accuracy.
-      Overall, the main learning was about the potential and limitations of machine learning models in classifying
-      images.
+      the (clarity of the) content and quality of the images.
+      For example, the model may correctly classify clear images with calm backgrounds of known categories like animals or vehicles, displayed in typical surroundings.
+      However, the model may struggle with images representing less common classes (e.g. garden hose), unusual shapes (e.g. flat soccer ball) or images that have a busy background, so that the main object of the image cannot be identified correctly.
+      Unexpectedly, there is also a limitation for some known categories (e.g. horse image, colosseum). On ther other hand, the model is able to classify objects correctly, even when there are multiple of them stacked together (e.g. soccer ball image).
+      The reason for this may lie in the model's training data and its ability to recognize specific features in the images. If the model "doesn't know" (wasn't trained for) certrain objects or wasn't trained to classify objects despite of noise, shifted angles, etc., it may be unable to classify variations of those objects.
+      Overall, it might be possible to reduce these limitations with further training of the model (but overfitting is to be prevented). 
     </p>
   </div>
 
@@ -260,12 +258,12 @@
       <li><b>Ladybug:</b>
         https://www.bund.net/fileadmin/_processed_/c/c/csm-marienkaefer-tipp-august-2017-6ccecdc5f7.jpg </li>
       <li><b>Soccer ball:</b>
-        https://www.berliner-fussball.de/fileadmin/user_upload/spielbetrieb/Foto-Dateien/sr_pictures_1_2013_10234.jpg
+        https://www.al-monitor.com/sites/default/files/styles/social_media_share/public/2022-11/GettyImages-1445444327.jpg?h=a5ae579a&itok=QA8h1w7h
       </li>
       <li><b>Colloseum:</b>
         https://www.escapeaway.dk/rejseblog/wp-content/uploads/2021/01/colosseum_rom_italien_ss_3.jpeg</li>
-      <li><b>Buggy:</b>
-        https://meinkinderwagen.com/wp-content/uploads/2020/11/Classico-retro-kinderwagen-nostalgie-romantik-1-1024x683.jpg
+      <li><b>Soccer ball (broken):</b>
+        https://www.imago-images.de/bild/sp/0012249979/s.jpg
       </li>
 
   </div>
