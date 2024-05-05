@@ -14,7 +14,7 @@
   <p style="padding-left:10px; padding-bottom:10px">This page was built for the module Deep Learning and it showcases
     the image classification with ml5. <br>
     To get a first understanding about the model and its limitations, you can have a look at the <b>Image Classification
-      Examples</b>. <br>
+      Examples</b>. Please note: Examples of the section "Incorrect Classification" might be classified correctly now, as the model is continously learning.<br>
     After that, the model can be tested with your own images in the section <b>Image Classification – Test your own
       image</b>. <br>
     Lastly, you can find a short <b>Discussion</b> about the learnings and a <b>Documentation </b> about this project.
@@ -176,7 +176,7 @@
   <button class="accordion">Discussion</button>
   <div class="panel">
     <p>While implementing the image classification it became obvious, that the classification results vary depending on
-      the (clarity of the) content and quality of the images.
+      the (clarity of the) content and quality of the images. The classification results may also change over time, as the model continues to learn (while implementing this, the "Incorrect Classification Examples" had to be exchanged multiple times, as after some time they were suddenly classified correctly).
       For example, the model may correctly classify clear images with calm backgrounds of known categories like animals or vehicles, displayed in typical surroundings.
       However, the model may struggle with images representing less common classes (e.g. garden hose), unusual shapes (e.g. flat soccer ball) or images that have a busy background, so that the main object of the image cannot be identified correctly.
       Unexpectedly, there is also a limitation for some known categories (e.g. horse or colosseum images). 
