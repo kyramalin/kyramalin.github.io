@@ -199,7 +199,7 @@ button:not(:disabled):hover {
     }
   }
 
-#hint {
+.hint {
     color: #787777; /* Gray color */
     font-size: 12px; /* Small font size */
     margin-bottom: 10px;

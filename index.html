@@ -10,11 +10,15 @@
 </head>
 
 <body>
-  <h1>Deep Learning EA 1: Bilderkennung mit ml5</h1>
+  <h1>Deep Learning EA 1: Image Classification with ml5</h1>
+  <p style="padding-left:10px; padding-bottom:10px">This page was built for the module Deep Learning and it showcases the image classification with ml5. <br>
+    To get a first understanding about the model and its limitations, you can have a look at the <b>Image Classification Examples</b>. <br>
+    After that, the model can be tested with your own images in the section <b>Image Classification – Test your own image</b>. <br>
+    Lastly, you can find a short <b>Discussion</b> about the learnings and a <b>Documentation </b> about this project. </p>
   <button id="examples" class="accordion">Image Classification Examples</button>
   <div class="panel">
-    <p><b>Examples for correct Classification</b></p>
-    <p>The following three images are examples for correct classification by the model.</p>
+    <p><b>Examples for correct Classification</b><br>
+The following three images are examples for correct classification by the model.</p>
     <table>
       <tr>
         <td>
@@ -65,8 +69,8 @@
         </td>
       </tr>
     </table>
-    <p><b>Examples for false Classification</b></p>
-    <p>The following three images are examples for incorrect classification by the model.</p>
+    <p><b>Examples for false Classification</b><br>
+      The following three images are examples for incorrect classification by the model.</p>
     <table>
       <tr>
         <td><img crossorigin="anonymous" id="image4" src="images/kinderwagen.jpeg"></td>
@@ -134,17 +138,19 @@
             </p>
           </div>
           <div style="padding-top: 5px;"></div>
-          <span id="hint" class="hint">Upload is restricted to images only (e.g.: .png, .jpg, .jpeg)</span>
+          <span class="hint">Upload is restricted to images only (e.g.: .png, .jpg, .jpeg)</span>
           <div class="buttons">
 
             <button type="button" id="classify-btn" disabled>Classify Image</button>
             <button type="button" id="reset-btn" disabled>Reset</button>
           </div>
           <div style="padding-top: 50px;">
-            <label id="uploaded-image-label" style="display: none;">Your uploaded Image</label>
+            <label id="uploaded-image-label">Your uploaded Image</label>
+            <div id="no-image-uploaded" class="hint" style="padding-top: 10px">No image uploaded. Please add an image to the drop zone.</div>
             <div style="padding-bottom: 20px;"></div>
-            <img id="uploaded-image" src="" alt="Uploaded Image">
-          </div>
+            <img id="uploaded-image" src="" alt="Uploaded Image" style="display: none;">
+        </div>
+        
         </td>
         <td>
           <label>Classification Result</label>
@@ -191,12 +197,13 @@
     <p>: Erläutern Sie Ihre Implementierung der Logik und alles, was für ihre Lösung wichtig ist (Ansatz, Resultate,
       Quellen, etc.)<br>
     <h3>Sources</h3>
-    <p>Horse: https://www.ehorses.de/magazin/wp-content/uploads/Quarter-Horse-Portrait-1024x731.jpg <br>
-    <p>Toucan: https://www.pbs.org/wnet/nature/files/2022/05/zdenek-machacek-eqXiLNfZDc0-unsplash-scaled-e1653519355914.jpg <br>
-    <p>Ladybug: https://www.bund.net/fileadmin/_processed_/c/c/csm-marienkaefer-tipp-august-2017-6ccecdc5f7.jpg <br>
-    <p>Soccer: https://www.berliner-fussball.de/fileadmin/user_upload/spielbetrieb/Foto-Dateien/sr_pictures_1_2013_10234.jpg <br>
-    <p>Colloseum: https://www.escapeaway.dk/rejseblog/wp-content/uploads/2021/01/colosseum_rom_italien_ss_3.jpeg<br>
-    <p>Buggy: https://meinkinderwagen.com/wp-content/uploads/2020/11/Classico-retro-kinderwagen-nostalgie-romantik-1-1024x683.jpg<br>
+    <ul style="line-height: 26px;">
+    <li>Horse:</b> https://www.ehorses.de/magazin/wp-content/uploads/Quarter-Horse-Portrait-1024x731.jpg </li>
+    <li><b>Toucan:</b> https://www.pbs.org/wnet/nature/files/2022/05/zdenek-machacek-eqXiLNfZDc0-unsplash-scaled-e1653519355914.jpg </li>
+    <li><b>Ladybug:</b> https://www.bund.net/fileadmin/_processed_/c/c/csm-marienkaefer-tipp-august-2017-6ccecdc5f7.jpg </li>
+    <li><b>Soccer:</b> https://www.berliner-fussball.de/fileadmin/user_upload/spielbetrieb/Foto-Dateien/sr_pictures_1_2013_10234.jpg </li>
+    <li><b>Colloseum:</b> https://www.escapeaway.dk/rejseblog/wp-content/uploads/2021/01/colosseum_rom_italien_ss_3.jpeg</li>
+    <li><b>Buggy:</b> https://meinkinderwagen.com/wp-content/uploads/2020/11/Classico-retro-kinderwagen-nostalgie-romantik-1-1024x683.jpg</li>
 
   </div>
   <script src="sketch.js"></script>
