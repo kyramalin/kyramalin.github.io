@@ -74,7 +74,6 @@ function classifyAndDisplayResults(imageElement, canvasId) {
             console.error(error);
             return;
         }
-
         // Find the appropriate result div
         const resultDivId = `result${canvasId.replace('results', '')}`;
         const resultDiv = document.getElementById(resultDivId);
@@ -195,6 +194,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+        // Event listener for the examples button
+        const examplesBtn = document.getElementById('examples');
+        examplesBtn.addEventListener('click', function() {
+            // Load images onto canvas 1 to 6 when the button is clicked
+            for (let i = 1; i <= 6; i++) {
+                const imageElement = document.getElementById(`image${i}`);
+                const canvasId = `results${i}`;
+                console.log("image", imageElement, "canvasid", canvasId);
+                classifyAndDisplayResults(imageElement, canvasId);
+            }
+        });
+
     // Event listener for reset button
     resetBtn.addEventListener('click', reset);
 
@@ -222,17 +233,6 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         dropzone.style.borderColor = '#cccccc';
         handleFileUpload(e);
-    });
-
-    // Event listener for the examples button
-    const examplesBtn = document.getElementById('examples');
-    examplesBtn.addEventListener('click', function() {
-        // Load images onto canvas 1 to 6 when the button is clicked
-        for (let i = 1; i <= 6; i++) {
-            const imageElement = document.getElementById(`image${i}`);
-            const canvasId = `results${i}`;
-            classifyAndDisplayResults(imageElement, canvasId);
-        }
     });
 
     // Add accordion functionality
