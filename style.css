@@ -216,7 +216,7 @@ button:not(:disabled):hover {
     padding: 5px;
     background-color: rgb(149, 0, 0, 0.3);
     border:solid;
-    border-color: rgb(149, 0, 0)
+    border-color: rgb(149, 0, 0);
     border-radius: 20px;
     border-width: 1px; 
 }
@@ -224,7 +224,7 @@ button:not(:disabled):hover {
 #correct{
     padding: 5px;
     background-color: rgba(4, 168, 28, 0.3);
-    border-color: rgb(4, 168, 28)
+    border-color: rgb(4, 168, 28);
     border:solid;
     border-radius: 20px;
     border-width: 1px; 
