@@ -70,22 +70,28 @@ function modelReady() {
 
 // Function to toggle loading state
 function setLoadingState(isLoading) {
-    const correctContainer = document.getElementById('correct-container');
+  // Get all containers with either the 'correct' or 'incorrect' class
+  const containers = document.querySelectorAll('.correct, .incorrect');
 
-    if (isLoading) {
-        // Show loading spinner and message
-        showLoading();
+  if (isLoading) {
+      // Show loading spinner and message
+      showLoading();
 
-        // Add 'no-background' class to remove background and border color
-        correctContainer.classList.add('no-background');
-    } else {
-        // Hide loading spinner and message
-        hideLoading();
+      // Add 'no-background' class to all 'correct' and 'incorrect' containers
+      containers.forEach(container => {
+          container.classList.add('no-background');
+      });
+  } else {
+      // Hide loading spinner and message
+      hideLoading();
 
-        // Remove 'no-background' class to restore original styles
-        correctContainer.classList.remove('no-background');
-    }
+      // Remove 'no-background' class from all 'correct' and 'incorrect' containers
+      containers.forEach(container => {
+          container.classList.remove('no-background');
+      });
+  }
 }
+
 
 // Function to show the loading message and spinner
 function showLoading() {
