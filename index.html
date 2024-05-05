@@ -1,4 +1,5 @@
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Deep Learning EA 1</title>
@@ -7,148 +8,157 @@
   <script src="https://cdn.jsdelivr.net/npm/ml5@latest/dist/ml5.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-      <h1>Deep Learning EA 1: Bilderkennung mit ml5</h1>
-      <button id="examples" class="accordion">Image Classification Examples</button>
-      <div class="panel">
-        <p><b>Examples for correct Classification</b></p>
-        <p>The following three images are examples for correct classification by the model.</p>
-        <table>
-          <tr>
-            <td>
-                <img crossorigin="anonymous" id="image1" src="images/horse.png">
-            </td>
-            <td>          
-            <div style="padding-top: 16px;"> 
-              <div id="result1"></div>
-                <canvas id="results1"></canvas>
-                </div>
-            </td>
-        </tr>
-          <tr>
-            <td><img crossorigin="anonymous" id="image2" src="images/horse.png"></td>
-            <td>
-              <div style="padding-top: 16px;"> 
-                <div id="result2"></div>
-                  <canvas id="results2"></canvas>
-                  </div>
-          
-          </td>
-          </tr>
-          <tr>
-            <td><img crossorigin="anonymous" id="image3" src="images/bird.png"></td>
-            <td>
-
-              <div style="padding-top: 16px;"> 
-                <div id="result3"></div>
-                  <canvas id="results3"></canvas>
-                  </div>
-          </td>
-          </tr>
-      </table>
-        <p><b>Examples for false Classification</b></p>
-        <p>The following three images are examples for incorrect classification by the model.</p>
-        <table>
-          <tr>
-            <td><img crossorigin="anonymous" id="image4" src="images/apple.png"></td>
-            <td>
-              <div style="padding-top: 16px;"> 
-                <div id="result4"></div>
-                  <canvas id="results4"></canvas>
-              </div>
-          </td>
-          </tr>
-          <tr>
-            <td><img crossorigin="anonymous" id="image5" src="images/car.png"></td>
-            <td>
-            <div style="padding-top: 16px;"> 
-            <div id="result5"></div>
-              <canvas id="results5"></canvas>
-              </div>
-          </td>
-          </tr>
-          <tr>
-            <td>
-              <img crossorigin="anonymous" id="image6" src="images/chair.png">
-            </td>
-            <td>
-              <div style="padding-top: 16px;"> 
-            <div id="result6"></div>
-              <canvas id="results6"></canvas>
-              </div>
-          </td>
-          </tr>
-      </table>
-      </div>
-
-      <button class="accordion">Image Classification – Upload your own Image</button>
-      <div class="panel">
-        <p>In this section you can add your own image to classify by the model. You can either drag your image into the dropzone or select your image from your file browser.</p>
-        <table style="padding-top: 20px;">
-          <tr>
-            <td style="vertical-align: top;">
-              <label>Drop your Image here</label>
-              
-              <div style="padding-top: 16px;" ></div>
-             <div id="dropzone">
-              <p>Drop image here or 
-                  <span id="upload-link">upload files</span>
-              </p>
+  <h1>Deep Learning EA 1: Bilderkennung mit ml5</h1>
+  <button id="examples" class="accordion">Image Classification Examples</button>
+  <div class="panel">
+    <p><b>Examples for correct Classification</b></p>
+    <p>The following three images are examples for correct classification by the model.</p>
+    <table>
+      <tr>
+        <td>
+          <img crossorigin="anonymous" id="image1" src="https://www.ehorses.de/magazin/wp-content/uploads/Quarter-Horse-Portrait-1024x731.jpg">
+        </td>
+        <td>
+          <div style="padding-top: 16px;">
+            <div id="result1"></div>
+            <canvas id="results1"></canvas>
           </div>
-          <div style="padding-top: 5px;" ></div>
+        </td>
+      </tr>
+      <tr>
+        <td><img crossorigin="anonymous" id="image2" src="https://www.bund.net/fileadmin/_processed_/c/c/csm-marienkaefer-tipp-august-2017-6ccecdc5f7.jpg"></td>
+        <td>
+          <div style="padding-top: 16px;">
+            <div id="result2"></div>
+            <canvas id="results2"></canvas>
+          </div>
+
+        </td>
+      </tr>
+      <tr>
+        <td><img crossorigin="anonymous" id="image3" src="https://www.berliner-fussball.de/fileadmin/user_upload/spielbetrieb/Foto-Dateien/sr_pictures_1_2013_10234.jpg"></td>
+        <td>
+
+          <div style="padding-top: 16px;">
+            <div id="result3"></div>
+            <canvas id="results3"></canvas>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <p><b>Examples for false Classification</b></p>
+    <p>The following three images are examples for incorrect classification by the model.</p>
+    <table>
+      <tr>
+        <td><img crossorigin="anonymous" id="image4" src="https://meinkinderwagen.com/wp-content/uploads/2020/11/Classico-retro-kinderwagen-nostalgie-romantik-1-1024x683.jpg"></td>
+        <td>
+          <div style="padding-top: 16px;">
+            <div id="result4"></div>
+            <canvas id="results4"></canvas>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><img crossorigin="anonymous" id="image5" src="https://assets.leevalley.com/Size4/10121/XB187-u-0068.jpg"></td>
+        <td>
+          <div style="padding-top: 16px;">
+            <div id="result5"></div>
+            <canvas id="results5"></canvas>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img crossorigin="anonymous" id="image6" src="https://www.escapeaway.dk/rejseblog/wp-content/uploads/2021/01/colosseum_rom_italien_ss_3.jpeg">
+        </td>
+        <td>
+          <div style="padding-top: 16px;">
+            <div id="result6"></div>
+            <canvas id="results6"></canvas>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <button class="accordion">Image Classification – Upload your own Image</button>
+  <div class="panel">
+    <p>In this section you can add your own image to classify by the model. You can either drag your image into the
+      dropzone or select your image from your file browser.</p>
+    <table style="padding-top: 20px;">
+      <tr>
+        <td style="vertical-align: top;">
+          <label>Drop your Image here</label>
+
+          <div style="padding-top: 16px;"></div>
+          <div id="dropzone">
+            <p>Drop image here or
+              <span id="upload-link">upload files</span>
+            </p>
+          </div>
+          <div style="padding-top: 5px;"></div>
           <span id="hint" class="hint">Upload is restricted to images only (e.g.: .png, .jpg, .jpeg)</span>
           <div class="buttons">
-            
+
             <button type="button" id="classify-btn" disabled>Classify Image</button>
-              <button type="button" id="reset-btn" disabled>Reset</button>
+            <button type="button" id="reset-btn" disabled>Reset</button>
           </div>
           <div style="padding-top: 50px;">
             <label id="uploaded-image-label" style="display: none;">Your uploaded Image</label>
-            <div style="padding-bottom: 20px;" ></div>
-      <img id="uploaded-image" src="" alt="Uploaded Image">
-    </div>
-            </td>
-            <td>
-              <label>Classification Result</label>
-              <div style="padding-top: 16px;">
-                <div id="loading-container" style="display: none;">
-                  <div id="loading-spinner" class="spinner"></div>
-                  <div id="loading-text">Classification Loading...</div>
-              </div>  
+            <div style="padding-bottom: 20px;"></div>
+            <img id="uploaded-image" src="" alt="Uploaded Image">
+          </div>
+        </td>
+        <td>
+          <label>Classification Result</label>
+          <div style="padding-top: 16px;">
+            </div>
+            <div id="result7"></div>
+            <canvas id="results7" height="50"></canvas>
+          </div>
+        </td>
+      </tr>
+    </table>
 
-                <div id="result7"></div>
-                <canvas id="results7" height="50"></canvas>
-              </div>
-            </td>
-        </tr>
-      </table>
- 
-       </div>
-       <button class="accordion">Discussion</button>
-       <div class="panel">
-         <p>While implementing the image classification it became obvious, that the classification results vary depending on the content and quality of the images. 
-          For example, the model may correctly classify clear images of most known categories like animals or vehicles. However, the model may struggle with less clear images, or those representing less common classes. 
-          Unexpectedly, there is also a limitation for some known categories (e.g. horse images). 
-          This can be due to the model's training data and its ability to recognize specific features in the images. Additionally, images with unusual angles, lighting, or backgrounds may challenge the model's accuracy.  
-          Overall, the main learning was about the potential and limitations of machine learning models in classifying images.
-         </p>
-       </div>
-      
-      <button class="accordion">Documentation</button>
-      <div class="panel">
-        <h3>Frameworks & Technologies</h3>
-        <ul style="line-height: 26px;">
-          <li><b>ml5.js:</b> In this code, ml5 is used to load and use the MobileNet model for image classification.</li>
-          <li><b>chart.js: </b>Chart.js library is used to create the bar charts to display the classification results graphically in canvas elements.</li>
-          <li><b>JavaScript: </b>With JavaScript interactivity and functionality is added, enabling actions like image classification using ml5.js, rendering bar charts with Chart.js, handling file uploads, and responding to user events like button clicks and file drops.</li>
-          <li><b>HTML: </b>HTML provides the structure for the user interface, including elements such as buttons, divs, and canvases.</li>
-          <li><b>CSS: </b>CSS takes care of the styling of the user interface (e.g. of the appearance of elements, providing visual feedback on user interactions). </li>
-        </ul>
-        <h3>Further Documentation</h3>
-        <p>: Erläutern Sie Ihre Implementierung der Logik und alles, was für ihre Lösung wichtig ist (Ansatz, Resultate, Quellen, etc.)<br>
-        <h3>Sources</h3>
-        <p>Horse: https://www.tierchenwelt.de/images/stories/haustiere/pferde/quarter_horse_paddock_l.jpg <br>
-      </div>
+  </div>
+  <button class="accordion">Discussion</button>
+  <div class="panel">
+    <p>While implementing the image classification it became obvious, that the classification results vary depending on
+      the content and quality of the images.
+      For example, the model may correctly classify clear images of most known categories like animals or vehicles.
+      However, the model may struggle with less clear images, or those representing less common classes.
+      Unexpectedly, there is also a limitation for some known categories (e.g. horse images).
+      This can be due to the model's training data and its ability to recognize specific features in the images.
+      Additionally, images with unusual angles, lighting, or backgrounds may challenge the model's accuracy.
+      Overall, the main learning was about the potential and limitations of machine learning models in classifying
+      images.
+    </p>
+  </div>
+
+  <button class="accordion">Documentation</button>
+  <div class="panel">
+    <h3>Frameworks & Technologies</h3>
+    <ul style="line-height: 26px;">
+      <li><b>ml5.js:</b> In this code, ml5 is used to load and use the MobileNet model for image classification.</li>
+      <li><b>chart.js: </b>Chart.js library is used to create the bar charts to display the classification results
+        graphically in canvas elements.</li>
+      <li><b>JavaScript: </b>With JavaScript interactivity and functionality is added, enabling actions like image
+        classification using ml5.js, rendering bar charts with Chart.js, handling file uploads, and responding to user
+        events like button clicks and file drops.</li>
+      <li><b>HTML: </b>HTML provides the structure for the user interface, including elements such as buttons, divs, and
+        canvases.</li>
+      <li><b>CSS: </b>CSS takes care of the styling of the user interface (e.g. of the appearance of elements, providing
+        visual feedback on user interactions). </li>
+    </ul>
+    <h3>Further Documentation</h3>
+    <p>: Erläutern Sie Ihre Implementierung der Logik und alles, was für ihre Lösung wichtig ist (Ansatz, Resultate,
+      Quellen, etc.)<br>
+    <h3>Sources</h3>
+    <p>Horse: https://www.tierchenwelt.de/images/stories/haustiere/pferde/quarter_horse_paddock_l.jpg <br>
+  </div>
   <script src="sketch.js"></script>
 </body>
+
 </html>
