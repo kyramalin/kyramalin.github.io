@@ -7,6 +7,10 @@ const canvasIDs = ['results1', 'results2', 'results3', 'results4', 'results5', '
 
 // Initialize the MobileNet model and bar charts
 function initializeModelAndChart() {
+    // Show loading spinner and text
+    const loadingContainer = document.getElementById('loading-container');
+    loadingContainer.style.display = 'flex';
+
     const options = { version: 1, alpha: 1.0, topk: 6 };
     mobilenet = ml5.imageClassifier('MobileNet', options, modelReady);
 
@@ -65,37 +69,39 @@ function initializeModelAndChart() {
 function modelReady() {
     console.log('Model is ready!');
     classifyBtn.disabled = false;
+    
+    // Hide the loading spinner and text
+    const loadingContainer = document.getElementById('loading-container');
+    loadingContainer.style.display = 'none';
 }
 
 function classifyAndDisplayResults(imageElement, canvasId) {
-  // Show loading spinner and text
-  const loadingContainer = document.getElementById('loading-container');
-  loadingContainer.style.display = 'flex';
+    // Show loading spinner and text
+    const loadingContainer = document.getElementById('loading-container');
+    loadingContainer.style.display = 'flex';
 
-  mobilenet.classify(imageElement, (error, results) => {
-      // Hide loading spinner and text
-      loadingContainer.style.display = 'none';
+    mobilenet.classify(imageElement, (error, results) => {
+        // Hide loading spinner and text
+        loadingContainer.style.display = 'none';
 
-      if (error) {
-          console.error(error);
-          return;
-      }
+        if (error) {
+            console.error(error);
+            return;
+        }
 
-      // Find the appropriate result div
-      const resultDivId = `result${canvasId.replace('results', '')}`;
-      const resultDiv = document.getElementById(resultDivId);
-      if (resultDiv) {
-          resultDiv.innerHTML = `Image classified as: ${results[0].label} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
-      } else {
-          console.error(`Could not find result div with ID: ${resultDivId}`);
-      }
+        // Find the appropriate result div
+        const resultDivId = `result${canvasId.replace('results', '')}`;
+        const resultDiv = document.getElementById(resultDivId);
+        if (resultDiv) {
+            resultDiv.innerHTML = `Image classified as: ${results[0].label} (Confidence: ${(results[0].confidence * 100).toFixed(2)}%)`;
+        } else {
+            console.error(`Could not find result div with ID: ${resultDivId}`);
+        }
 
-      // Update the bar chart in the specified canvas
-      updateChart(results, canvasId);
-  });
+        // Update the bar chart in the specified canvas
+        updateChart(results, canvasId);
+    });
 }
-
-
 
 // Update the specified bar chart with classification results
 function updateChart(results, canvasId) {
@@ -120,19 +126,19 @@ function handleFileUpload(event) {
     if (file && file.type.startsWith("image/")) {
         const reader = new FileReader();
         
-reader.onload = function(e) {
-    uploadedImage = new Image();
-    uploadedImage.onload = function() {
-        const uploadedImageElement = document.getElementById('uploaded-image');
-        if (uploadedImageElement) {
-            uploadedImageElement.src = e.target.result;
-            uploadedImageElement.style.display = "block";
-            classifyBtn.disabled = false;
-            resetBtn.disabled = false;
-        }
-    };
-    uploadedImage.src = e.target.result;
-};
+        reader.onload = function(e) {
+            uploadedImage = new Image();
+            uploadedImage.onload = function() {
+                const uploadedImageElement = document.getElementById('uploaded-image');
+                if (uploadedImageElement) {
+                    uploadedImageElement.src = e.target.result;
+                    uploadedImageElement.style.display = "block";
+                    classifyBtn.disabled = false;
+                    resetBtn.disabled = false;
+                }
+            };
+            uploadedImage.src = e.target.result;
+        };
 
         reader.readAsDataURL(file);
     } else {
@@ -226,5 +232,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-
