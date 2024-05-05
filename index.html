@@ -26,7 +26,7 @@
     <table>
       <tr>
         <td>
-          <img crossorigin="anonymous" id="image1" src="images/fußball2.jpeg">
+          <img crossorigin="anonymous" id="image1" src="images/car2.jpeg">
         </td>
         <td>
           <div style="padding-top: 16px;">
@@ -145,10 +145,10 @@
           <span class="hint">Upload is restricted to images only (e.g.: .png, .jpg, .jpeg)</span>
           <div class="buttons">
             <button type="button" id="reset-btn" disabled>Reset
-              <span class="tooltip">Please upload an image first to activate the button.</span>
+              <span class="tooltip">Please upload an image to activate the button.</span>
             </button>
             <button type="button" id="classify-btn" disabled>Classify Image
-              <span class="tooltip">Please upload an image first to classify it.</span>
+              <span class="tooltip">Please upload an image to classify it.</span>
             </button>
           </div>
           <div style="padding-top: 50px;">
@@ -162,6 +162,7 @@
         </td>
         <td>
           <label>Classification Result</label>
+          <div id="no-image-classified" class="hint" style="padding-top: 10px">No image classified yet. Upload an image and click "Classify Image".</div>
           <div style="padding-top: 16px;">
           </div>
           <div id="result7"></div>
@@ -176,9 +177,9 @@
   <div class="panel">
     <p>While implementing the image classification it became obvious, that the classification results vary depending on
       the (clarity of the) content and quality of the images.
-      For example, the model may correctly classify clear images with calm backgrounds of known categories like animals, displayed in typical surroundings.
+      For example, the model may correctly classify clear images with calm backgrounds of known categories like animals or vehicles, displayed in typical surroundings.
       However, the model may struggle with images representing less common classes (e.g. garden hose), unusual shapes (e.g. flat soccer ball) or images that have a busy background, so that the main object of the image cannot be identified correctly.
-      Unexpectedly, there is also a limitation for some known categories (e.g. horse image, colosseum). On ther other hand, the model is able to classify objects correctly, even when there are multiple of them stacked together (e.g. soccer ball image).
+      Unexpectedly, there is also a limitation for some known categories (e.g. horse or colosseum images). 
       The reason for this may lie in the model's training data and its ability to recognize specific features in the images. If the model "doesn't know" (wasn't trained for) certrain objects or wasn't trained to classify objects despite of noise, shifted angles, etc., it may be unable to classify variations of those objects.
       Overall, it might be possible to reduce these limitations with further training of the model (but overfitting is to be prevented). 
     </p>
@@ -257,9 +258,9 @@
       </li>
       <li><b>Sloth:</b>
         https://brevardzoo.org/wp-content/uploads/2022/10/higgins.jpg </li>
-      <li><b>Soccer ball:</b>
-        https://www.al-monitor.com/sites/default/files/styles/social_media_share/public/2022-11/GettyImages-1445444327.jpg?h=a5ae579a&itok=QA8h1w7h
-      </li>
+      <li><b>Car:</b>
+        https://images.ctfassets.net/uaddx06iwzdz/1vRp24TWXnRnw8OB2hH0CU/3d6c6cc79ead10c632262d799f4c6d69/dodge-charger-oldtimer-side.jpeg
+        </li>
       <li><b>Colloseum:</b>
         https://www.escapeaway.dk/rejseblog/wp-content/uploads/2021/01/colosseum_rom_italien_ss_3.jpeg</li>
       <li><b>Soccer ball (broken):</b>

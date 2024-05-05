@@ -137,89 +137,105 @@ function updateChart(results, canvasId) {
 
 // Function to reset the application state
 function reset() {
-    const uploadedImageElement = document.getElementById('uploaded-image');
-    const noImageUploadedDiv = document.getElementById('no-image-uploaded');
+  // Reset the uploaded image display and other UI elements
+  const uploadedImageElement = document.getElementById('uploaded-image');
+  const noImageUploadedDiv = document.getElementById('no-image-uploaded');
+  const noImageClassifiedDiv = document.getElementById('no-image-classified');
 
-    uploadedImageElement.src = '';
-    uploadedImageElement.style.display = 'none';
-    noImageUploadedDiv.style.display = 'block';
-    
-    // Keep the uploaded image label visible
-    document.getElementById('uploaded-image-label').style.display = 'block';
+  // Clear the uploaded image
+  uploadedImageElement.src = '';
+  uploadedImageElement.style.display = 'none';
 
-    classifyBtn.disabled = true;
-    resetBtn.disabled = true;
+  // Display the "no image uploaded" and "no image classified" divs
+  noImageUploadedDiv.style.display = 'block';
+  if (noImageClassifiedDiv) {
+      noImageClassifiedDiv.style.display = 'block';
+  }
+  
+  // Keep the uploaded image label visible
+  document.getElementById('uploaded-image-label').style.display = 'block';
 
-    // Reset all bar charts
-    canvasIDs.forEach(canvasId => {
-        const barChart = barCharts[canvasId];
-        barChart.data.labels = [];
-        barChart.data.datasets[0].data = [];
-        barChart.update();
-    });
+  // Disable classify and reset buttons
+  classifyBtn.disabled = true;
+  resetBtn.disabled = true;
 
-    // Reset the result divs
-    canvasIDs.forEach(canvasId => {
-        const resultDivId = `result${canvasId.replace('results', '')}`;
-        const resultDiv = document.getElementById(resultDivId);
-        if (resultDiv) {
-            resultDiv.innerHTML = '';
-        }
-    });
+  // Reset all bar charts
+  canvasIDs.forEach(canvasId => {
+      const barChart = barCharts[canvasId];
+      barChart.data.labels = [];
+      barChart.data.datasets[0].data = [];
+      barChart.update();
+  });
+
+  // Reset the result divs
+  canvasIDs.forEach(canvasId => {
+      const resultDivId = `result${canvasId.replace('results', '')}`;
+      const resultDiv = document.getElementById(resultDivId);
+      if (resultDiv) {
+          resultDiv.innerHTML = '';
+      }
+  });
 }
 
-// Event listeners
+
 document.addEventListener('DOMContentLoaded', function() {
-    initializeModelAndChart();
-    
-    classifyBtn = document.getElementById('classify-btn');
-    resetBtn = document.getElementById('reset-btn');
-    
-    classifyBtn.addEventListener('click', () => {
-        if (uploadedImage) {
-            classifyAndDisplayResults(uploadedImage, 'results7');
-        }
-    });
+  initializeModelAndChart();
 
-        for (let i = 1; i <= 6; i++) {
-            const imageElement = document.getElementById(`image${i}`);
-            const canvasId = `results${i}`;
-            classifyAndDisplayResults(imageElement, canvasId);
-        }
+  classifyBtn = document.getElementById('classify-btn');
+  resetBtn = document.getElementById('reset-btn');
 
-    resetBtn.addEventListener('click', reset);
+  classifyBtn.addEventListener('click', () => {
+      if (uploadedImage) {
+          // Remove the "no-image-classified" div when classify button is clicked
+          const noImageClassifiedDiv = document.getElementById('no-image-classified');
+          if (noImageClassifiedDiv) {
+              noImageClassifiedDiv.style.display = 'none';
+          }
 
-    document.getElementById('upload-link').addEventListener('click', () => {
-        const fileInputElement = document.createElement('input');
-        fileInputElement.type = 'file';
-        fileInputElement.accept = 'image/*';
-        fileInputElement.onchange = handleFileUpload;
-        fileInputElement.click();
-    });
+          classifyAndDisplayResults(uploadedImage, 'results7');
+      }
+  });
 
-    const dropzone = document.getElementById('dropzone');
-    dropzone.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        dropzone.style.borderColor = '#007BFF';
-    });
+  // Automatically classify and display results for each image when the document is loaded
+  for (let i = 1; i <= 6; i++) {
+      const imageElement = document.getElementById(`image${i}`);
+      const canvasId = `results${i}`;
+      classifyAndDisplayResults(imageElement, canvasId);
+  }
 
-    dropzone.addEventListener('dragleave', () => {
-        dropzone.style.borderColor = '#cccccc';
-    });
+  resetBtn.addEventListener('click', reset);
 
-    dropzone.addEventListener('drop', function(e) {
-        e.preventDefault();
-        dropzone.style.borderColor = '#cccccc';
-        handleFileUpload(e);
-    });
+  document.getElementById('upload-link').addEventListener('click', () => {
+      const fileInputElement = document.createElement('input');
+      fileInputElement.type = 'file';
+      fileInputElement.accept = 'image/*';
+      fileInputElement.onchange = handleFileUpload;
+      fileInputElement.click();
+  });
 
-    // Add accordion functionality
-    const accordions = document.getElementsByClassName('accordion');
-    for (let accordion of accordions) {
-        accordion.addEventListener('click', function() {
-            this.classList.toggle('active');
-            const panel = this.nextElementSibling;
-            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
-        });
-    }
+  const dropzone = document.getElementById('dropzone');
+  dropzone.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dropzone.style.borderColor = '#007BFF';
+  });
+
+  dropzone.addEventListener('dragleave', () => {
+      dropzone.style.borderColor = '#cccccc';
+  });
+
+  dropzone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dropzone.style.borderColor = '#cccccc';
+      handleFileUpload(e);
+  });
+
+  // Add accordion functionality
+  const accordions = document.getElementsByClassName('accordion');
+  for (let accordion of accordions) {
+      accordion.addEventListener('click', function() {
+          this.classList.toggle('active');
+          const panel = this.nextElementSibling;
+          panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+      });
+  }
 });
