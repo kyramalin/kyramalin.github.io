@@ -169,66 +169,70 @@ function reset() {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the model and charts
-    initializeModelAndChart();
+  // Initialize the model and charts
+  initializeModelAndChart();
 
-    // Get classify and reset buttons
-    classifyBtn = document.getElementById('classify-btn');
-    resetBtn = document.getElementById('reset-btn');
-    
-    // Event listener for classify button
-    classifyBtn.addEventListener('click', function() {
-        if (uploadedImage) {
-            // Classify the uploaded image and display results in the seventh canvas
-            classifyAndDisplayResults(uploadedImage, 'results7');
-        } else {
-            console.error('No uploaded image to classify.');
-        }
-    });
+  // Get classify and reset buttons
+  classifyBtn = document.getElementById('classify-btn');
+  resetBtn = document.getElementById('reset-btn');
+  
+  // Event listener for classify button
+  classifyBtn.addEventListener('click', function() {
+      if (uploadedImage) {
+          // Classify the uploaded image and display results in the seventh canvas
+          classifyAndDisplayResults(uploadedImage, 'results7');
+      } else {
+          console.error('No uploaded image to classify.');
+      }
+  });
 
-    // Event listener for reset button
-    resetBtn.addEventListener('click', reset);
+  // Event listener for reset button
+  resetBtn.addEventListener('click', reset);
 
-    // Event listener for file upload
-    const fileInput = document.getElementById('upload-link');
-    fileInput.addEventListener('click', function() {
-        const fileInputElement = document.createElement('input');
-        fileInputElement.type = 'file';
-        fileInputElement.accept = 'image/*';
-        fileInputElement.onchange = handleFileUpload;
-        fileInputElement.click();
-    });
+  // Event listener for file upload
+  const fileInput = document.getElementById('upload-link');
+  fileInput.addEventListener('click', function() {
+      const fileInputElement = document.createElement('input');
+      fileInputElement.type = 'file';
+      fileInputElement.accept = 'image/*';
+      fileInputElement.onchange = handleFileUpload;
+      fileInputElement.click();
+  });
 
-    const dropzone = document.getElementById('dropzone');
-    dropzone.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        dropzone.style.borderColor = '#007BFF';
-    });
+  const dropzone = document.getElementById('dropzone');
+  dropzone.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dropzone.style.borderColor = '#007BFF';
+  });
 
-    dropzone.addEventListener('dragleave', function() {
-        dropzone.style.borderColor = '#cccccc';
-    });
+  dropzone.addEventListener('dragleave', function() {
+      dropzone.style.borderColor = '#cccccc';
+  });
 
-    dropzone.addEventListener('drop', function(e) {
-        e.preventDefault();
-        dropzone.style.borderColor = '#cccccc';
-        handleFileUpload(e);
-    });
+  dropzone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dropzone.style.borderColor = '#cccccc';
+      handleFileUpload(e);
+  });
 
-    // Classify and display results immediately for images 1 to 6
-    for (let i = 1; i <= 6; i++) {
-        const imageElement = document.getElementById(`image${i}`);
-        const canvasId = `results${i}`;
-        classifyAndDisplayResults(imageElement, canvasId);
-    }
+  // Event listener for the examples button
+  const examplesBtn = document.getElementById('examples');
+  examplesBtn.addEventListener('click', function() {
+      // Load images onto canvas 1 to 6 when the button is clicked
+      for (let i = 1; i <= 6; i++) {
+          const imageElement = document.getElementById(`image${i}`);
+          const canvasId = `results${i}`;
+          classifyAndDisplayResults(imageElement, canvasId);
+      }
+  });
 
-    // Add accordion functionality
-    const accordions = document.getElementsByClassName("accordion");
-    for (let i = 0; i < accordions.length; i++) {
-        accordions[i].addEventListener('click', function() {
-            this.classList.toggle("active");
-            const panel = this.nextElementSibling;
-            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
-        });
-    }
+  // Add accordion functionality
+  const accordions = document.getElementsByClassName("accordion");
+  for (let i = 0; i < accordions.length; i++) {
+      accordions[i].addEventListener('click', function() {
+          this.classList.toggle("active");
+          const panel = this.nextElementSibling;
+          panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+      });
+  }
 });
