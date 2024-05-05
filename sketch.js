@@ -12,20 +12,9 @@ function initializeModelAndChart() {
 
     // Initialize bar charts for each canvas
     canvasIDs.forEach((canvasId) => {
-        const ctx = document.getElementById(canvasId);
+        const ctx = document.getElementById(canvasId).getContext('2d');
         
-        if (!ctx) {
-            console.error(`Canvas element with ID '${canvasId}' not found.`);
-            return;
-        }
-
-        const chartContext = ctx.getContext('2d');
-        if (!chartContext) {
-            console.error(`Context for canvas ID '${canvasId}' not found.`);
-            return;
-        }
-
-        barCharts[canvasId] = new Chart(chartContext, {
+        barCharts[canvasId] = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: [],
@@ -80,15 +69,12 @@ function modelReady() {
 }
 
 function classifyAndDisplayResults(imageElement, canvasId) {
-  if (!mobilenet) {
-      console.error('MobileNet model is not ready yet.');
-      return;
-  }
-  mobilenet.classify(imageElement, (error, results) => {
-      if (error) {
-          console.error(error);
-          return;
-      }
+    mobilenet.classify(imageElement, (error, results) => {
+        if (error) {
+            console.error(error);
+            return;
+        }
+
         // Find the appropriate result div
         const resultDivId = `result${canvasId.replace('results', '')}`;
         const resultDiv = document.getElementById(resultDivId);
@@ -134,11 +120,6 @@ function handleFileUpload(event) {
             uploadedImage.onload = function () {
                 const uploadedImageElement = document.getElementById('uploaded-image');
                 const uploadedImageLabel = document.getElementById('uploaded-image-label'); // Get the label element
-                
-                // Log the elements to check if they are null
-                console.log('Uploaded image element:', uploadedImageElement);
-                console.log('Uploaded image label:', uploadedImageLabel);
-
                 if (uploadedImageElement && uploadedImageLabel) {
                     uploadedImageElement.src = e.target.result;
                     uploadedImageElement.style.display = "block";
@@ -146,8 +127,6 @@ function handleFileUpload(event) {
                     // Enable classify button once image is loaded
                     classifyBtn.disabled = false;
                     resetBtn.disabled = false;
-                } else {
-                    console.error('Either uploaded image element or label is missing.');
                 }
             };
             uploadedImage.src = e.target.result;
@@ -183,8 +162,6 @@ function reset() {
             barChart.data.labels = [];
             barChart.data.datasets[0].data = [];
             barChart.update();
-        } else {
-            console.error(`Bar chart with ID '${canvasId}' not found.`);
         }
     });
 
@@ -194,8 +171,6 @@ function reset() {
         const resultDiv = document.getElementById(resultDivId);
         if (resultDiv) {
             resultDiv.innerHTML = ''; // Clear the inner HTML of the result div
-        } else {
-            console.error(`Result div with ID '${resultDivId}' not found.`);
         }
     });
 }
