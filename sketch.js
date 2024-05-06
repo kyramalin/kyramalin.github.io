@@ -48,10 +48,10 @@ function initializeModelAndChart() {
                 scales: {
                     y: {
                         beginAtZero: true,
-                        suggestedMax: 100,
+                        suggestedMax: 1,
                         title: {
                             display: true,
-                            text: 'Confidence (%)'
+                            text: 'Confidence'
                         }
                     }
                 }
