@@ -158,23 +158,19 @@ function reset() {
   // Disable classify and reset buttons
   classifyBtn.disabled = true;
   resetBtn.disabled = true;
+  
+//Reset bar chart for custom upload
+if(barCharts["results7"]) {
+  barCharts["results7"].data.labels = [];
+  barCharts["results7"].data.datasets[0].data = [];
+  barCharts["results7"].update();
+}
 
-  // Reset all bar charts
-  canvasIDs.forEach(canvasId => {
-      const barChart = barCharts[canvasId];
-      barChart.data.labels = [];
-      barChart.data.datasets[0].data = [];
-      barChart.update();
-  });
-
-  // Reset the result divs
-  canvasIDs.forEach(canvasId => {
-      const resultDivId = `result${canvasId.replace('results', '')}`;
-      const resultDiv = document.getElementById(resultDivId);
-      if (resultDiv) {
-          resultDiv.innerHTML = '';
-      }
-  });
+//Reset result div for custom upload
+const resultDiv = document.getElementById("result7");
+if(resultDiv) {
+  resultDiv.innerHTML = ''; // Clear the inner HTML of the result div
+}
 }
 
 

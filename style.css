@@ -104,16 +104,16 @@ button {
 }
 
 .tooltip {
-    display: none; /* Initially hidden */
+    display: none; 
     position: absolute;
-    background-color:  #0f0f11; /* Dark background */
-    color: #fff; /* White text */
-    padding: 10px 10px; /* Padding */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 13px; /* Smaller font size */
-    z-index: 1; /* Layering the tooltip above other elements */
-    opacity: 0; /* Initial opacity */
-    transition: opacity 1s ease; /* Smooth transition */
+    background-color:  #0f0f11; 
+    color: #fff; 
+    padding: 10px 10px; 
+    border-radius: 4px; 
+    font-size: 13px; 
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1s ease;
     transition-delay: 1s;
 
 }
@@ -121,7 +121,7 @@ button {
 /* Display the tooltip when hovering over a disabled button */
 button:disabled:hover .tooltip {
     display: block;
-    opacity: 1; /* Show the tooltip with smooth transition */
+    opacity: 1; 
 }
 
 button:disabled {
@@ -131,20 +131,20 @@ button:disabled {
 
 button:not(:disabled):hover, #rest-btn:not(:disabled):hover {
     background-color: rgb(91, 134, 193);
-    color: #ffffff; /* Darker blue text color on hover */
+    color: #ffffff; 
 
 }
 
 /* Styling for the reset button */
 #reset-btn:not(:disabled) {
-    background-color: rgba(45, 141, 243, 0.2); /* A lighter blue background color */
-    color: rgb(106, 151, 213); /* Blue text color */
-    transition: background-color 0.3s, border 0.3s, color 0.3s; /* Smooth transitions for hover effects */
+    background-color: rgba(45, 141, 243, 0.2); 
+    color: rgb(106, 151, 213);
+    transition: background-color 0.3s, border 0.3s, color 0.3s; 
 }
 
 #reset-btn:not(:disabled):hover {
-    background-color: rgba(20, 89, 163, 0.2); /* Slightly darker blue background color on hover */
-    color: rgb(104, 138, 186); /* Darker blue text color on hover */
+    background-color: rgba(20, 89, 163, 0.2); 
+    color: rgb(104, 138, 186); 
 }
 
 
