@@ -1,0 +1,77 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Deep Learning EA 2</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@latest/dist/tfjs-vis.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>
+</head>
+
+<body>
+  <h1>Deep Learning EA 2: Regression with FFNN</h1>
+  <p style="padding-left:10px; padding-bottom:10px">This page was built for the module Deep Learning and showcases
+    the regression with FFNN. <br>
+  </p>
+  <button id="examples" class="accordion">Regression</button>
+  <div class="panel">
+    <div class="row">
+      <div class="col card">
+        <div class="card-body">
+          <div id="trainDataPlotUnraus"></div>
+        </div>
+      </div>
+      <div class="col card">
+        <div class="card-body">
+          <div id="trainDataPlotRaus"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col card">
+        <div class="card-body">
+          <div id="resultPlotTrainUnraus"></div>
+          <div id="lossTrainUnraus"></div>
+        </div>
+      </div>
+      <div class="col card">
+        <div class="card-body">
+          <div id="resultPlotTestUnraus"></div>
+          <div id="lossTestUnraus"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col card">
+        <div class="card-body">
+          <div id="resultPlotTrainBestFit"></div>
+          <div id="lossTrainBestFit"></div>
+        </div>
+      </div>
+      <div class="col card">
+        <div class="card-body">
+          <div id="resultPlotTestBestFit"></div>
+          <div id="lossTestBestFit"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col card">
+        <div class="card-body">
+          <div id="resultPlotTrainOverFit"></div>
+          <div id="lossTrainOverFit"></div>
+        </div>
+      </div>
+      <div class="col card">
+        <div class="card-body">
+          <div id="resultPlotTestOverFit"></div>
+          <div id="lossTestOverFit"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="sketch2.js"></script>
+  <script src="script2.js"></script>
+</body>
+</html>
