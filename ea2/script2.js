@@ -107,23 +107,27 @@ async function plotPredictions(id, model, data, title, color) {
 
   const xs = data.map(d => d.x);
   const ys = model.predict(tf.tensor2d(xs, [xs.length, 1])).arraySync();
-  const values = xs.map((x, i) => ({ x: x, y: ys[i][0] }));
+  const valuesPredictions = xs.map((x, i) => ({ x: x, y: ys[i][0] }));
+  const valuesOriginal = data.map(d => ({ x: d.x, y: d.y }));
+
   tfvis.render.scatterplot(
-      document.getElementById(id),
-      { values, series: ['Vorhersagen'] },
-      { 
-        xLabel: 'x', 
-        yLabel: 'y', 
-        height: 300, 
-        title, 
-        seriesColors: [color], 
-        style: { backgroundColor: '#1e1f21' } 
-      }
+    document.getElementById(id),
+    { values: [valuesOriginal, valuesPredictions], series: ['Originaldaten', 'Vorhersagen'] },
+    { 
+      xLabel: 'x', 
+      yLabel: 'y', 
+      height: 300, 
+      title, 
+      seriesColors: ['orange', color], 
+      style: { backgroundColor: '#1e1f21' } 
+    }
   );
 
   // Hide spinner once the plot is loaded
   hideSpinner(id);
 }
+
+
 
 function plotLossAndInfo(id, loss, title, noise, optimizer, epochs, lossFn) {
   const noiseInfo = noise ? `Yes (Variance ${noise})` : "No";
