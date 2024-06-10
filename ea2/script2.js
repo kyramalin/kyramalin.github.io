@@ -64,7 +64,7 @@ function plotData(id, trainData, testData, title) {
           yLabel: 'y', 
           height: 300, 
           title,
-          seriesColors: ['#5ca9fa', 'green'],
+          seriesColors: ['green', '#5ca9fa'],
           style: { backgroundColor: '#1e1f21' } // Explicitly set the colors for the series
       }
   );
@@ -126,8 +126,6 @@ async function plotPredictions(id, model, data, title, color) {
   // Hide spinner once the plot is loaded
   hideSpinner(id);
 }
-
-
 
 function plotLossAndInfo(id, loss, title, noise, optimizer, epochs, lossFn) {
   const noiseInfo = noise ? `Yes (Variance ${noise})` : "No";
@@ -267,20 +265,24 @@ document.getElementById('model-btn').addEventListener('click', async function() 
 });
 
 function plotScatterplots(trainData, testData, modelParams) {
-    const trainDataValues = trainData.map(d => ({ x: d.x, y: d.y }));
-    tfvis.render.scatterplot(
-        document.getElementById('trainDataPlot'),
-        { values: [trainDataValues], series: ['Trainingsdaten'] },
-        { xLabel: 'x', yLabel: 'y', height: 300, title: 'Trainingsdaten' }
-    );
+  const trainDataValues = trainData.map(d => ({ x: d.x, y: d.y }));
+  const originalDataValues = generateData(100, 0).map(d => ({ x: d.x, y: d.y })); // Originaldaten ohne Rauschen
 
-    const testDataValues = testData.map(d => ({ x: d.x, y: d.y }));
-    tfvis.render.scatterplot(
-        document.getElementById('testDataPlot'),
-        { values: [testDataValues], series: ['Testdaten'] },
-        { xLabel: 'x', yLabel: 'y', height: 300, title: 'Testdaten' }
-    );
+  tfvis.render.scatterplot(
+      document.getElementById('trainDataPlot'),
+      { values: [trainDataValues, originalDataValues], series: ['Trainingsdaten', 'Originaldaten'] },
+      { xLabel: 'x', yLabel: 'y', height: 300, title: 'Trainingsdaten', colors: ['#5ca9fa', 'orange'] }
+  );
+
+  const testDataValues = testData.map(d => ({ x: d.x, y: d.y }));
+
+  tfvis.render.scatterplot(
+      document.getElementById('testDataPlot'),
+      { values: [testDataValues, originalDataValues], series: ['Testdaten', 'Originaldaten'] },
+      { xLabel: 'x', yLabel: 'y', height: 300, title: 'Testdaten', colors: ['green', 'orange'] }
+  );
 }
+
 
 async function trainAndEvaluateModel(trainData, testData, modelParams) {
     // Ein einfaches Modell erstellen (dies ist ein Platzhalter - passen Sie diesen Teil an Ihre Bedürfnisse an)
