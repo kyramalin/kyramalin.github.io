@@ -1,77 +1,200 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Deep Learning EA 2</title>
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style2.css">
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@latest/dist/tfjs-vis.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>
 </head>
-
 <body>
-  <h1>Deep Learning EA 2: Regression with FFNN</h1>
-  <p style="padding-left:10px; padding-bottom:10px">This page was built for the module Deep Learning and showcases
-    the regression with FFNN. <br>
-  </p>
-  <button id="examples" class="accordion">Regression</button>
+  <h1>Deep Learning EA 2: Regression mit FFNN</h1>
+  <p>Diese Seite wurde für das Modul Deep Learning erstellt und zeigt die Regression mit FFNN. 
+    Im Folgenden werden zunächst die initialen Trainings- und Testdaten ohne (links) und mit (rechts) Rauschen dargestellt. In Zeile 2 folgen Vorhersagen zu den unverrauschten Trainings- (links) und Testdaten (rechts).
+  Zeile 3 zeigt dieselben mit Rauschen, während Zeile 4 (mit Rauschen) um eine sichtbare Überanpassung ergänzt wird.</p>
+  <button id="examples" class="accordion">Playground (optional)</button>
   <div class="panel">
-    <div class="row">
-      <div class="col card">
+    <p style="padding-bottom: 20">
+      </p>
+              <h2>Modellparameter</h2>
+              <div style="padding-bottom: 16px">
+                <label for="numberLayers" id="numberLayersLabel">Anzahl Layer: <span id="numberLayersValue"></span></label>
+                <input type="range" class="form-range" min="1" max="12" step="1.0" id="numberLayers">
+            </div>
+            <div style="padding-bottom: 16px">
+                <label for="numberEpochs" id="numberEpochsLabel">Anzahl Epochen: <span id="numberEpochsValue"></span></label>
+                <input type="range" class="form-range" min="1" max="1000" step="1.0" id="numberEpochs">
+            </div>
+            <div style="padding-bottom: 16px">
+                  <label for="activationFunction">Auswahl der Aktivierungsfunktion</label>
+                  <select id="activationFunction">
+                    <option value="elu">ELU</option>
+                    <option value="relu">ReLU</option>
+                    <option value="sigmoid">Sigmoid</option>
+                    <option value="softmax">Softmax</option>
+                  </select>
+                </div>
+                <div style="padding-bottom: 16px">
+                  <label for="optimizer">Auswahl des Optimizers</label>
+                  <select id="optimizer">
+                    <option value="sgd">SGD</option>
+                    <option value="adam">Adam</option>
+                    <option value="momentum">Momentum</option>
+                    <option value="adamax">Adamax</option>
+                    <option value="adagrad">Adagrad</option>
+                    <option value="adadelta">Adadelta</option>
+                  </select>
+                </div>
+                  <div style="padding-bottom: 16px;">
+                    <input type="checkbox" id="gaussianNoiseCheckbox">
+                    <label for="gaussianNoiseCheckbox" style="margin-left: 10px;">Gaussian Noise</label>
+                </div>
+                  <div class="buttons">
+                    <button type="button" id="reset-btn" disabled>Zurücksetzen
+                    </button>
+                    <button type="button" id="model-btn">Ausführen
+                    </button>
+                  </div>
+                  <table>
+                    <tr>
+                      <td class="card">
+                        <div class="card-body">
+                          <div id="trainDataPlot"></div>
+                        </div>
+                      </td>
+                      <td class="card">
+                        <div class="card-body">
+                          <div id="testDataPlot"></div>
+
+                          </div>
+                          </td>
+                          </tr>
+                          </table>
+      </div>
+  <table>
+    <tr>
+      <td class="card">
         <div class="card-body">
+          <h4>Trainings- und Testdaten (ohne Rauschen)</h3>
+          </div>
           <div id="trainDataPlotUnraus"></div>
         </div>
-      </div>
-      <div class="col card">
+      </td>
+      <td class="card">
         <div class="card-body">
+          <h4>Trainings- und Testdaten (mit Rauschen)</h4>
           <div id="trainDataPlotRaus"></div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col card">
+      </td>
+    </tr>
+    <tr>
+      <td class="card">
         <div class="card-body">
+          <h4>Vorhersage y_unverrauscht(x) Trainingsdaten</h4>
           <div id="resultPlotTrainUnraus"></div>
           <div id="lossTrainUnraus"></div>
         </div>
-      </div>
-      <div class="col card">
+      </td>
+      <td class="card">
         <div class="card-body">
+          <h4>Vorhersage y_unverrauscht(x) Testdaten </h4>
+
           <div id="resultPlotTestUnraus"></div>
           <div id="lossTestUnraus"></div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col card">
+      </td>
+    </tr>
+    <tr>
+      <td class="card">
         <div class="card-body">
+          <h4>Vorhersage y_best(x) Trainingsdaten </h4>
           <div id="resultPlotTrainBestFit"></div>
           <div id="lossTrainBestFit"></div>
         </div>
-      </div>
-      <div class="col card">
+      </td>
+      <td class="card">
         <div class="card-body">
+          <h4>Vorhersage y_best(x) Testdaten </h4>
           <div id="resultPlotTestBestFit"></div>
           <div id="lossTestBestFit"></div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col card">
+      </td>
+    </tr>
+    <tr>
+      <td class="card">
         <div class="card-body">
+          <h4>Vorhersage y_overfit(x) Trainingsdaten</h4>
           <div id="resultPlotTrainOverFit"></div>
           <div id="lossTrainOverFit"></div>
         </div>
-      </div>
-      <div class="col card">
+      </td>
+      <td class="card">
         <div class="card-body">
+          <h4>Vorhersage y_overfit(x) Testdaten</h4>
           <div id="resultPlotTestOverFit"></div>
           <div id="lossTestOverFit"></div>
         </div>
-      </div>
+      </td>
+    </tr>
+  </table>
+  <button id="examples" class="accordion">Diskussion</button>
+  <div class="panel">
+    <p style="padding-bottom: 20">
+Die Modellarchitektur besteht aus 2 versteckten Schichten mit je 100 Neuronen und ReLU-Aktivierungsfunktionen und einer Output-Layer mit linearer Aktivierungsfunktion. Als Loss-Funktion wurde Mean Squared Error (MSE) gewählt und der Adam-Optimizer mit einer Lernrate von 0.01, um eine schnelle und stabile Konvergenz zu gewährleisten.
+Beim Training auf den unverrauschten Daten zeigte das Modell eine hohe Genauigkeit auf den Testdaten, was auf eine gute Generalisierungsfähigkeit hinweist. 
+Durch Rauschen (Gaussian Noise mit Varianz = 0.05) wird die Robustheit des Modells getestet: Das Modell zeigt darauf eine gute Anpassung, was auf eine gewisse Robustheit hinweist. 
+Übermäßiges Training auf die verrauschten Daten führte erwartungsgemäß zu Overfitting, was durch höhere Testverluste im Vergleich zu den Trainingsverlusten bestätigt wurde. 
+Es wurde zudem deutlich, dass ohne Rauschen kein Overfitting auftreten kann: Das Modell lernt die zugrundeliegende Funktion sehr genau, ohne durch zufällige Abweichungen beeinflusst zu werden – es werden also keine Anomalien gelernt, die spezifisch für den Trainingssatz sind.
+Das bedeutet, dass das Modell, das auf den Trainingsdaten trainiert wurde, auf den Testdaten genauso gut abschneidet (ähnliche Loss-Werte), was Overfitting verhindert.
+Insgesamt lässt sich beobachten, dass eine moderate Anzahl von Trainings-Epochen und die Verwendung von regulierenden Techniken wie Rauschen dazu beitragen können, die Generalisierungsfähigkeit des Modells zu verbessern. 
+Wichtig ist die Balance zwischen Modellkomplexität, Trainingsdauer und Datenrauschen für die Leistungsfähigkeit neuronaler Netze.
+      </p>
     </div>
-  </div>
+<button id="examples" class="accordion">Dokumentation</button>
+<div class="panel">
+  <h2>Allgemein</h2>
+  <p style="padding-bottom: 20">
+    Auf dieser Seite wird die Implementierung einer Regression mit einem Feedforward Neural Network (FFNN) demonstriert – die verwendeten Parameter werden im Abschnitt "Dokumentation der relevanten Funktionen" erläutert.
+    Dabei werden Trainings- und Testdaten verwendet, um das Modell zu trainieren und dessen Leistung zu evaluieren.
+    Die Ergebnisse der Regression werden durch verschiedene Diagramme visualisiert. Diese Diagramme zeigen die Trainingsdaten, die Testergebnisse und die Verlustkurven, um die Leistung des Modells zu veranschaulichen.</p>
+  <h2>Frameworks & Technologien</h2>
+  <ul style="padding-bottom: 20">
+    <li><b>TensorFLow.js: </b>Dieses Framework ermöglicht das Erstellen und Trainieren von neuronalen Netzen. 
+      In diesem Kontext wird eszur Implementierung der neuronalen Netze und Durchführung der Regression genutzt.</li>
+    <li><b>TensorFlow.js Vis:</b> Dieses Framework bietet Visualisierungswerkzeuge für TensorFlow.js. 
+      Es wird verwendet, um die Trainings- und Testergebnisse grafisch darzustellen.</li>
+    <li><b>JavaScript: </b>JavaScript wird u. a. verwendet, um die Daten zu generieren und in Test- und Trainingsdaten aufzuteilen. 
+    Weiterhin wird JavaScript im Kontext von TensorFlow genutzt (Erstellen, Trainieren, Evaluieren des neuronalen Netzes). 
+    Auch die Ergebnisse werden mithilfe von JavaScript dargestellt (TensorFlow.js Vis). </li>
+    <li><b>HTML: </b>HTML liefert die Struktur für die Benutzeroberfläche, einschließlich Elementen wie Buttons oder divs.</li>
+    <li><b>CSS: </b>CSS übernimmt die Gestaltung der Benutzeroberfläche (bspw. das Aussehen von Elementen, die
+      visuelle Rückmeldung bei Benutzerinteraktionen). </li>
+  </ul>
+  <h2>Dokumentation der relevanten Funktionen</h2>
+  <ul style="padding-bottom: 20">
+    <li><b>generate Data(N, noiseVariance):</b>
+      Erzeugt ein Array von 100 zufälligen, gleichverteilten x-Werten im Intervall [-2, +2] basierend auf der gegebenen Funktion und fügt eine Varianz von 0.05 an Rauschen auf die y-Werte hinzu.</li>
+    <li><b>splitData(data):</b>
+      Mischt die Daten und teilt sie in zwei Hälften (50 für das Training, 50 für das Testen).</li>
+    <li><b>calculateFunctionResult(x):</b>
+      Berechnet das y(x) für die generierten x-Werte gemäß der gegebenen Funktion 0.5 * (x + 0.8) * (x + 1.8) * (x - 0.2) * (x - 0.3) * (x - 1.9) + 1 für einen gegebenen x-Wert.
+      <li><b>createModel():</b>
+      Erstellt ein neuronales Netzwerk mit zwei hidden Layers (je 100 Neuronen & Aktivierungsfunktion ReLU) und einer Output-Layer.
+    <li><b>trainModel(model, data, epochs):</b>
+      Trainiert das Modell mit den bereitgestellten Daten über eine definierbare Anzahl von Epochen. Hierbei wird als Loss-Funktion der meanSquaredError und der adam-optimizer mit einer Lernrate von 0.01 definiert</li>
+    <li><b>evaluateModel(model, data):</b>
+      Berechnet den Mean Squared Error der Modellvorhersagen im Vergleich zu den tatsächlichen Werten.
+      </li>
+    <li><b>plotData(id, data, title, color):</b>
+      Visualisiert die gegebenen Datenpunkte in einem Scatterplot mit dem angegebenen Titel und der Farbe.</li>
+    <li><b>plotPredictions(id, model, data, title):</b>
+      Visualisiert die Modellvorhersagen als Scatterplot basierend auf den gegebenen Datenpunkten.</li>
+    <li><b>plotLoss(id, loss, title):</b>
+      Zeigt den Loss mit der angegebenen ID und dem Titel an.</li>
+  </ul>
   <script src="sketch2.js"></script>
   <script src="script2.js"></script>
 </body>
+
 </html>
