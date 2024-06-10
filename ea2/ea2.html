@@ -140,13 +140,13 @@
   <div class="panel">
     <p style="padding-bottom: 20">
 Die Modellarchitektur besteht aus 2 versteckten Schichten mit je 100 Neuronen und ReLU-Aktivierungsfunktionen und einer Output-Layer mit linearer Aktivierungsfunktion. Als Loss-Funktion wurde Mean Squared Error (MSE) gewählt und der Adam-Optimizer mit einer Lernrate von 0.01, um eine schnelle und stabile Konvergenz zu gewährleisten.
-Beim Training auf den unverrauschten Daten zeigte das Modell eine hohe Genauigkeit auf den Testdaten, was auf eine gute Generalisierungsfähigkeit hinweist. 
-Durch Rauschen (Gaussian Noise mit Varianz = 0.05) wird die Robustheit des Modells getestet: Das Modell zeigt darauf eine gute Anpassung, was auf eine gewisse Robustheit hinweist. 
-Übermäßiges Training auf die verrauschten Daten führte erwartungsgemäß zu Overfitting, was durch höhere Testverluste im Vergleich zu den Trainingsverlusten bestätigt wurde. 
+Beim Training auf den unverrauschten Daten zeigte das Modell i.d.R. eine hohe Genauigkeit auf den Testdaten, was auf eine gute Generalisierungsfähigkeit hinweist. 
+Durch Rauschen (Gaussian Noise mit Varianz = 0.05) wird die Robustheit des Modells getestet: Das Modell zeigt darauf i.d.R. bei moderater Epochenzahl (50-150) eine gute Anpassung, was auf eine gewisse Robustheit hinweist. 
+Übermäßiges Training auf die verrauschten Daten (>500 Epochen) führte erwartungsgemäß i.d.R. zu Overfitting, was durch höhere Testverluste im Vergleich zu den Trainingsverlusten bestätigt wurde. 
 Es wurde zudem deutlich, dass ohne Rauschen kein Overfitting auftreten kann: Das Modell lernt die zugrundeliegende Funktion sehr genau, ohne durch zufällige Abweichungen beeinflusst zu werden – es werden also keine Anomalien gelernt, die spezifisch für den Trainingssatz sind.
 Das bedeutet, dass das Modell, das auf den Trainingsdaten trainiert wurde, auf den Testdaten genauso gut abschneidet (ähnliche Loss-Werte), was Overfitting verhindert.
 Insgesamt lässt sich beobachten, dass eine moderate Anzahl von Trainings-Epochen und die Verwendung von regulierenden Techniken wie Rauschen dazu beitragen können, die Generalisierungsfähigkeit des Modells zu verbessern. 
-Wichtig ist die Balance zwischen Modellkomplexität, Trainingsdauer und Datenrauschen für die Leistungsfähigkeit neuronaler Netze.
+Wichtig für die Leistungsfähigkeit ist die Balance zwischen Modellkomplexität, Trainingsdauer und Datenrauschen.
 <br/>
 <br/>
 <b>Hinweis:</b> Durch die zufällige Auswahl an Trainingsdaten und zufälligen Rausch-Komponenten können der Lernprozess und somit auch die Loss-Werte variieren. 
