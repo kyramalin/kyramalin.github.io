@@ -1,17 +1,19 @@
 // Generiere Daten und füge Rauschen hinzu
-function generateData(N, noiseVariance) {
+function generateData(N, noiseVariance, seed) {
   let data = [];
-  let noise = tf.randomNormal([N], 0, Math.sqrt(noiseVariance)).arraySync();
+  let rng = new Math.seedrandom(seed); // Verwende einen Seed für die Zufallszahlengenerierung
+  let noise = tf.randomNormal([N], 0, Math.sqrt(noiseVariance), null, seed).arraySync();
   for (let i = 0; i < N; i++) {
-      let x = Math.random() * 4 - 2; // Werte im Bereich [-2, 2]
-      let y = calculateFunctionResult(x);
-      data.push({ x: x, y: y + noise[i] });
+    let x = rng() * 4 - 2; // Werte im Bereich [-2, 2]
+    let y = calculateFunctionResult(x);
+    data.push({ x: x, y: y + noise[i] });
   }
   return data;
 }
 
-function splitData(data) {
-  tf.util.shuffle(data);
+function splitData(data, seed) {
+  let rng = new Math.seedrandom(seed); // Verwende einen Seed für das Shuffeln
+  tf.util.shuffle(data, () => rng()); // Shuffle-Daten mit dem Seed
   let trainData = data.slice(0, Math.floor(data.length / 2));
   let testData = data.slice(Math.floor(data.length / 2));
   return { trainData, testData };
@@ -139,14 +141,15 @@ function plotLossAndInfo(id, loss, title, noise, optimizer, epochs, lossFn) {
 document.addEventListener('DOMContentLoaded', async () => {
   const N = 100;
   const noiseVariance = 0.05;
+  const seed = 123; // Fester Seed für Reproduzierbarkeit
 
   // Unverrauschte Daten generieren und aufteilen
-  const dataUnraus = generateData(N, 0);
-  const { trainData: trainDataUnraus, testData: testDataUnraus } = splitData(dataUnraus);
+  const dataUnraus = generateData(N, 0, seed);
+  const { trainData: trainDataUnraus, testData: testDataUnraus } = splitData(dataUnraus, seed);
 
   // Verrauschte Daten generieren und aufteilen
-  const dataRaus = generateData(N, noiseVariance);
-  const { trainData: trainDataRaus, testData: testDataRaus } = splitData(dataRaus);
+  const dataRaus = generateData(N, noiseVariance, seed);
+  const { trainData: trainDataRaus, testData: testDataRaus } = splitData(dataRaus, seed);
 
   // Visualisiere die Datensätze
   plotData('trainDataPlotUnraus', trainDataUnraus, testDataUnraus, 'Unverrauschte Trainings- und Testdaten');
@@ -174,7 +177,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Modell für verrauschte Daten (Best-Fit) trainieren
   let modelBestFit = createModel();
   modelBestFit.compile({ optimizer: tf.train.adam(0.01), loss: lossFn });
-  const epochsBestFit = 50;
+  const epochsBestFit = 100;
   await trainModel(modelBestFit, trainDataRaus, epochsBestFit);
 
   // Modell auf Testdaten evaluieren
@@ -190,7 +193,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Modell für verrauschte Daten (Over-Fit) trainieren
   let modelOverFit = createModel();
   modelOverFit.compile({ optimizer: tf.train.adam(0.01), loss: lossFn });
-  const epochsOverFit = 500;
+  const epochsOverFit = 800;
   await trainModel(modelOverFit, trainDataRaus, epochsOverFit);
 
   // Modell auf Testdaten evaluieren
