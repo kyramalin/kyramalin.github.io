@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Modell für unverrauschte Daten trainieren
   let modelUnraus = createModel();
   modelUnraus.compile({ optimizer: tf.train.adam(0.01), loss: lossFn });
-  const epochsUnraus = 100;
+  const epochsUnraus = 150;
   await trainModel(modelUnraus, trainDataUnraus, epochsUnraus);
 
   // Modell auf Testdaten evaluieren
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Modell für verrauschte Daten (Best-Fit) trainieren
   let modelBestFit = createModel();
   modelBestFit.compile({ optimizer: tf.train.adam(0.01), loss: lossFn });
-  const epochsBestFit = 100;
+  const epochsBestFit = 50;
   await trainModel(modelBestFit, trainDataRaus, epochsBestFit);
 
   // Modell auf Testdaten evaluieren
@@ -187,10 +187,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   plotLossAndInfo('lossTrainBestFit', lossTrainBestFit, 'Train', noiseVariance, optimizer, epochsBestFit, lossFn);
   plotLossAndInfo('lossTestBestFit', lossTestBestFit, 'Test', noiseVariance, optimizer, epochsBestFit, lossFn);
 
-  // Modell für verrauschte Daten (Overfit) trainieren
+  // Modell für verrauschte Daten (Over-Fit) trainieren
   let modelOverFit = createModel();
   modelOverFit.compile({ optimizer: tf.train.adam(0.01), loss: lossFn });
-  const epochsOverFit = 800;  // Übermäßiges Training für Overfitting
+  const epochsOverFit = 500;
   await trainModel(modelOverFit, trainDataRaus, epochsOverFit);
 
   // Modell auf Testdaten evaluieren
@@ -198,11 +198,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   let lossTestOverFit = evaluateModel(modelOverFit, testDataRaus);
   
   // Visualisierung der Vorhersagen
-  plotPredictions('resultPlotTrainOverFit', modelOverFit, trainDataRaus, 'Overfit Vorhersagen auf Trainingsdaten', '#5ca9fa');
-  plotPredictions('resultPlotTestOverFit', modelOverFit, testDataRaus, 'Overfit Vorhersagen auf Testdaten', 'green');
+  plotPredictions('resultPlotTrainOverFit', modelOverFit, trainDataRaus, 'Over-Fit Vorhersagen auf Trainingsdaten', '#5ca9fa');
+  plotPredictions('resultPlotTestOverFit', modelOverFit, testDataRaus, 'Over-Fit Vorhersagen auf Testdaten', 'green');
   plotLossAndInfo('lossTrainOverFit', lossTrainOverFit, 'Train', noiseVariance, optimizer, epochsOverFit, lossFn);
   plotLossAndInfo('lossTestOverFit', lossTestOverFit, 'Test', noiseVariance, optimizer, epochsOverFit, lossFn);
 });
+
 
 // Range-Elemente auswählen
 const numberLayersRange = document.getElementById('numberLayers');
@@ -226,36 +227,84 @@ numberEpochsRange.addEventListener('input', () => {
 });
 
 // Event-Listener für den "Ausführen"-Button hinzufügen
-document.getElementById('model-btn').addEventListener('click', function() {
-  // Hier rufst du die Funktion plotScatterplots auf und übergibst die erforderlichen Parameter
-  const modelParams = {
-    numLayers: parseInt(numberLayersRange.value),
-    numEpochs: parseInt(numberEpochsRange.value),
-    activationFunction: activationFunctionSelect.value,
-    optimizer: optimizerSelect.value,
-    gaussianNoise: gaussianNoiseCheckbox.checked
-  };
+document.getElementById('model-btn').addEventListener('click', async function() {
+    showSpinner('trainDataPlot', 'Daten werden geladen...');
+    showSpinner('testDataPlot', 'Daten werden geladen...');
 
-  // Hier rufst du die Funktion zur Generierung der Plots auf
-  plotScatterplots(trainData, testData, modelParams);
+    const N = 100;
+    const noiseVariance = gaussianNoiseCheckbox.checked ? 0.05 : 0;
+
+    const data = generateData(N, noiseVariance);
+    const { trainData, testData } = splitData(data);
+
+    const modelParams = {
+        numLayers: parseInt(numberLayersRange.value),
+        numEpochs: parseInt(numberEpochsRange.value),
+        activationFunction: activationFunctionSelect.value,
+        optimizer: optimizerSelect.value,
+        gaussianNoise: gaussianNoiseCheckbox.checked
+    };
+
+    // Trainings- und Testdaten plotten
+    plotScatterplots(trainData, testData, modelParams);
+
+    // Modell trainieren und Loss-Werte berechnen
+    const { trainLoss, testLoss } = await trainAndEvaluateModel(trainData, testData, modelParams);
+
+    // Loss-Werte anzeigen
+    document.getElementById('lossTrain').textContent = `Trainings-Loss: ${trainLoss.toFixed(4)}`;
+    document.getElementById('lossTest').textContent = `Test-Loss: ${testLoss.toFixed(4)}`;
+
+    hideSpinner('trainDataPlot');
+    hideSpinner('testDataPlot');
 });
 
-// Funktion zur Erstellung von Scatterplots für Trainings- und Testdaten
 function plotScatterplots(trainData, testData, modelParams) {
-  // Trainingsdaten
-  const trainDataValues = trainData.map(d => ({ x: d.x, y: d.y }));
-  tfvis.render.scatterplot(
-    document.getElementById('trainDataPlot'),
-    { values: [trainDataValues], series: ['Trainingsdaten'] },
-    { xLabel: 'x', yLabel: 'y', height: 300, title: 'Trainingsdaten' }
-  );
+    const trainDataValues = trainData.map(d => ({ x: d.x, y: d.y }));
+    tfvis.render.scatterplot(
+        document.getElementById('trainDataPlot'),
+        { values: [trainDataValues], series: ['Trainingsdaten'] },
+        { xLabel: 'x', yLabel: 'y', height: 300, title: 'Trainingsdaten' }
+    );
 
-  // Testdaten
-  const testDataValues = testData.map(d => ({ x: d.x, y: d.y }));
-  tfvis.render.scatterplot(
-    document.getElementById('testDataPlot'),
-    { values: [testDataValues], series: ['Testdaten'] },
-    { xLabel: 'x', yLabel: 'y', height: 300, title: 'Testdaten' }
-  );
+    const testDataValues = testData.map(d => ({ x: d.x, y: d.y }));
+    tfvis.render.scatterplot(
+        document.getElementById('testDataPlot'),
+        { values: [testDataValues], series: ['Testdaten'] },
+        { xLabel: 'x', yLabel: 'y', height: 300, title: 'Testdaten' }
+    );
 }
 
+async function trainAndEvaluateModel(trainData, testData, modelParams) {
+    // Ein einfaches Modell erstellen (dies ist ein Platzhalter - passen Sie diesen Teil an Ihre Bedürfnisse an)
+    const model = tf.sequential();
+    for (let i = 0; i < modelParams.numLayers; i++) {
+        model.add(tf.layers.dense({
+            units: 10,
+            activation: modelParams.activationFunction,
+            inputShape: [1]
+        }));
+    }
+    model.add(tf.layers.dense({ units: 1 }));
+
+    model.compile({
+        optimizer: modelParams.optimizer,
+        loss: 'meanSquaredError'
+    });
+
+    const trainX = tf.tensor2d(trainData.map(d => [d.x]));
+    const trainY = tf.tensor2d(trainData.map(d => [d.y]));
+    const testX = tf.tensor2d(testData.map(d => [d.x]));
+    const testY = tf.tensor2d(testData.map(d => [d.y]));
+
+    // Modell trainieren
+    await model.fit(trainX, trainY, {
+        epochs: modelParams.numEpochs
+    });
+
+    // Loss-Werte berechnen
+    const trainLoss = model.evaluate(trainX, trainY).dataSync()[0];
+    const testLoss = model.evaluate(testX, testY).dataSync()[0];
+
+    return { trainLoss, testLoss };
+}

@@ -12,19 +12,19 @@
   <h1>Deep Learning EA 2: Regression mit FFNN</h1>
   <p>Diese Seite wurde für das Modul Deep Learning erstellt und zeigt die Regression mit FFNN. 
     Im Folgenden werden zunächst die initialen Trainings- und Testdaten ohne (links) und mit (rechts) Rauschen dargestellt. In Zeile 2 folgen Vorhersagen zu den unverrauschten Trainings- (links) und Testdaten (rechts).
-  Zeile 3 zeigt dieselben mit Rauschen, während Zeile 4 (mit Rauschen) um eine sichtbare Überanpassung ergänzt wird.</p>
-  <button id="examples" class="accordion">Playground (optional)</button>
+  Zeile 3 zeigt dieselben mit Rauschen, während Zeile 4 (mit Rauschen) um eine sichtbare Überanpassung ergänzt wird. Abschließend folgt eine Diskussion sowie Dokumentation.</p>
+  <button id="examples" class="accordion">Playground (für eigenen Entwicklungsprozess)</button>
   <div class="panel">
     <p style="padding-bottom: 20">
       </p>
               <h2>Modellparameter</h2>
               <div style="padding-bottom: 16px">
-                <label for="numberLayers" id="numberLayersLabel">Anzahl Layer: <span id="numberLayersValue"></span></label>
-                <input type="range" class="form-range" min="1" max="12" step="1.0" id="numberLayers">
+                <label for="numberLayers" id="numberLayersLabel">Anzahl Layer: <span id="numberLayersValue">3</span></label>
+                <input type="range" class="form-range" min="1" max="12" step="1.0" id="numberLayers" value="3">
             </div>
             <div style="padding-bottom: 16px">
-                <label for="numberEpochs" id="numberEpochsLabel">Anzahl Epochen: <span id="numberEpochsValue"></span></label>
-                <input type="range" class="form-range" min="1" max="1000" step="1.0" id="numberEpochs">
+                <label for="numberEpochs" id="numberEpochsLabel">Anzahl Epochen: <span id="numberEpochsValue">50</span></label>
+                <input type="range" class="form-range" min="1" max="1000" step="1.0" id="numberEpochs" value="50">
             </div>
             <div style="padding-bottom: 16px">
                   <label for="activationFunction">Auswahl der Aktivierungsfunktion</label>
@@ -40,19 +40,15 @@
                   <select id="optimizer">
                     <option value="sgd">SGD</option>
                     <option value="adam">Adam</option>
-                    <option value="momentum">Momentum</option>
                     <option value="adamax">Adamax</option>
                     <option value="adagrad">Adagrad</option>
-                    <option value="adadelta">Adadelta</option>
                   </select>
                 </div>
                   <div style="padding-bottom: 16px;">
                     <input type="checkbox" id="gaussianNoiseCheckbox">
-                    <label for="gaussianNoiseCheckbox" style="margin-left: 10px;">Gaussian Noise</label>
+                    <label for="gaussianNoiseCheckbox" style="margin-left: 10px;">Gaussian Noise (Variance 0.05)</label>
                 </div>
                   <div class="buttons">
-                    <button type="button" id="reset-btn" disabled>Zurücksetzen
-                    </button>
                     <button type="button" id="model-btn">Ausführen
                     </button>
                   </div>
@@ -61,12 +57,14 @@
                       <td class="card">
                         <div class="card-body">
                           <div id="trainDataPlot"></div>
+                          <div style="padding-top: 16px;" id="lossTrain"></div>
+
                         </div>
                       </td>
                       <td class="card">
                         <div class="card-body">
                           <div id="testDataPlot"></div>
-
+                          <div style="padding-top: 16px;" id="lossTest"></div>
                           </div>
                           </td>
                           </tr>
