@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Modell für unverrauschte Daten trainieren
   let modelUnraus = createModel();
   modelUnraus.compile({ optimizer: tf.train.adam(0.01), loss: lossFn });
-  const epochsUnraus = 75;
+  const epochsUnraus = 150;
   await trainModel(modelUnraus, trainDataUnraus, epochsUnraus);
 
   // Modell auf Testdaten evaluieren
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Modell für verrauschte Daten (Best-Fit) trainieren
   let modelBestFit = createModel();
   modelBestFit.compile({ optimizer: tf.train.adam(0.01), loss: lossFn });
-  const epochsBestFit = 135;
+  const epochsBestFit = 50;
   await trainModel(modelBestFit, trainDataRaus, epochsBestFit);
 
   // Modell auf Testdaten evaluieren
