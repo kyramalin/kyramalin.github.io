@@ -258,3 +258,4 @@ function plotScatterplots(trainData, testData, modelParams) {
     { xLabel: 'x', yLabel: 'y', height: 300, title: 'Testdaten' }
   );
 }
+
