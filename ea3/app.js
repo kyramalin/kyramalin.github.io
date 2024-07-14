@@ -43,6 +43,7 @@ async function predictNextWord() {
     const inputText = document.getElementById('inputText').value;
     const messageDiv = document.getElementById('message');
     const messageContainer = document.getElementById('message1');
+    const loadingDiv = document.getElementById('loading');
 
     if (!inputText) {
         messageDiv.innerText = 'Bitte gib zur Generierung einer Vorhersage zunächst etwas in das Textfeld ein.';
@@ -52,6 +53,8 @@ async function predictNextWord() {
 
     const inputTensor = preprocessInput(inputText);
     if (!inputTensor) return;
+
+    loadingDiv.style.display = 'block'; // Show loading message
 
     try {
         const predictions = await model.predict(inputTensor).data();
@@ -69,8 +72,42 @@ async function predictNextWord() {
         displayPredictions(indicesArray, valuesArray);
     } catch (error) {
         console.error('Error predicting next word:', error);
+    } finally {
+        loadingDiv.style.display = 'none'; // Hide loading message
     }
 }
+
+async function appendNextWord() {
+    const inputText = document.getElementById('inputText').value;
+    const messageDiv = document.getElementById('message');
+    const messageContainer = document.getElementById('message1');
+    const loadingDiv = document.getElementById('loading');
+
+    if (!inputText) {
+        messageDiv.innerText = 'Bitte gib zur Generierung einer Vorhersage zunächst etwas in das Textfeld ein.';
+        messageContainer.style.display = 'block';
+        return;
+    }
+
+    const inputTensor = preprocessInput(inputText);
+    if (!inputTensor) return;
+
+    loadingDiv.style.display = 'block'; // Show loading message
+
+    try {
+        const predictions = await model.predict(inputTensor).data();
+        const nextWordIndex = tf.argMax(predictions, -1).dataSync()[0];
+        const indexWord = JSON.parse(tokenizer.config.index_word);
+        const nextWord = indexWord[nextWordIndex] || 'Undefined';
+
+        appendWord(nextWord);
+    } catch (error) {
+        console.error('Error appending next word:', error);
+    } finally {
+        loadingDiv.style.display = 'none'; // Hide loading message
+    }
+}
+
 
 function displayPredictions(indices, values) {
     const predictionsContainer = document.getElementById('predictionsContainer');
@@ -104,32 +141,6 @@ function appendWord(word) {
     const inputText = document.getElementById('inputText');
     inputText.value += ' ' + word;
     predictNextWord(); // Refresh predictions after appending a word
-}
-
-async function appendNextWord() {
-    const inputText = document.getElementById('inputText').value;
-    const messageDiv = document.getElementById('message');
-    const messageContainer = document.getElementById('message1');
-
-    if (!inputText) {
-        messageDiv.innerText = 'Bitte gib zur Generierung einer Vorhersage zunächst etwas in das Textfeld ein.';
-        messageContainer.style.display = 'block';
-        return;
-    }
-
-    const inputTensor = preprocessInput(inputText);
-    if (!inputTensor) return;
-
-    try {
-        const predictions = await model.predict(inputTensor).data();
-        const nextWordIndex = tf.argMax(predictions, -1).dataSync()[0];
-        const indexWord = JSON.parse(tokenizer.config.index_word);
-        const nextWord = indexWord[nextWordIndex] || 'Undefined';
-
-        appendWord(nextWord);
-    } catch (error) {
-        console.error('Error appending next word:', error);
-    }
 }
 
 function startAutoPrediction() {
