@@ -100,10 +100,10 @@ function displayPredictions(indices, values) {
     predictionsContainer.style.display = indices.length > 0 ? 'block' : 'none';
 }
 
-
 function appendWord(word) {
     const inputText = document.getElementById('inputText');
     inputText.value += ' ' + word;
+    predictNextWord(); // Refresh predictions after appending a word
 }
 
 async function appendNextWord() {

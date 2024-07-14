@@ -113,7 +113,6 @@ button:not(:disabled):hover, #rest-btn:not(:disabled):hover {
     color: rgb(104, 138, 186); 
 }
 
-
 /* Accordion Styles */
 .accordion {
     background-color: #27282b;
@@ -208,11 +207,10 @@ button:not(:disabled):hover, #rest-btn:not(:disabled):hover {
 .message{
     background-color: rgba(149, 97, 0, 0.3);
     border: solid rgb(149, 97, 0);
-    margin-left: 5px;
-    width: 95.5%;
     padding: 10px 20px;
     border-radius: 6px;
     border-width: 1px;
+    width: 98%;
 }
 
 /* Prediction Button Styles */
@@ -229,6 +227,3 @@ button:not(:disabled):hover, #rest-btn:not(:disabled):hover {
     flex: 1;
 }
 
-.prediction-button:hover {
-    background-color: rgba(107, 156, 224, 0.663);
-}
