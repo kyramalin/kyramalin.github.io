@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deep Learning EA 3</title>
+  <link rel="stylesheet" href="../style2.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+</head>
+<body>
+  <h1>Deep Learning EA 3: Language Model mit LSTM</h1>
+  <p>Diese Seite wurde für das Modul Deep Learning erstellt und zeigt das Language Model mit LSTM.</p>
+  <textarea style="width: 99%; margin-left: 5px;" id="inputText" rows="4" cols="50"></textarea>
+  <div style="padding-bottom: 5px"></div>
+  <div class="message" id="message1" style= "display: none;">
+  <div id="message" style="font-size: 14px"></div>
+</div>
+  <div style="margin-top: 10px; margin-bottom: 20px">
+  <button id="predictButton">Vorhersage</button>
+  <button id="nextButton">Weiteres Wort anhängen</button>
+  <button id="autoButton">Auto-Generierung</button>
+  <button id="stopButton">Stopp</button>
+  <button id="resetButton">Zurücksetzen</button>
+  <div id="predictionsContainer" style="display:none;">
+    <h4>Vorhersagen</h3>
+  <div id="predictions"></div>
+  </div>
+</div>
+  <button class="accordion">Diskussion</button>
+  <div class="panel">
+    <p>Platzhalter</p>
+  </div>
+  <button class="accordion">Dokumentation</button>
+  <div class="panel">
+    <h2>Allgemein</h2>
+    <h2>Frameworks & Technologien</h2>
+    <ul>
+      <li>Datensatz: <a style= "color: #5ca9fa;" href="https://www.kaggle.com/datasets/abhishek/10k-german-news-articles/data">10k German News Articles</a> (Der Datensatz wurde als Maßnahme der Komplexitätsreduzierung etwas reduziert, um Laufzeitunterbrechungen zu vermeiden)</li>
+      <li><b>Google Colab:</b> Die Konfiguration und das Training des Netzes wurde in Google Colab vorgenommen.</li>
+      <li><b>TensorFlow:</b> Mithilfe von TensorFlow wurde das Training des Netzes vorgenommen.</li>
+      <li><b>TensorFlow.js:</b> Dient der Ausführung des Modells direkt im Browser.</li>
+      <li><b>HTML:</b> HTML liefert die Struktur für die Benutzeroberfläche, einschließlich Elementen wie Buttons oder divs.</li>
+      <li><b>CSS:</b> CSS sorgt für die Gestaltung der Benutzeroberfläche (bspw. das Aussehen von Elementen, die visuelle Darstellung von Benutzerinteraktionen).</li>
+    </ul>
+    <h2>Dokumentation der relevanten Funktionen</h2>
+    <ul>
+      <li><b>loadModel():</b> Lädt das Modell und den Tokenizer (JSON-Dateien).</li>
+      <li><b>preprocessInput(text):</b> Verarbeitet den Eingabetext, indem er ihn mit dem geladenen Tokenizer in Tokens umwandelt.</li>
+      <li><b>predictNextWord():</b> Prognostiziert das nächste Wort basierend auf der Benutzereingabe mithilfe des geladenen Modells und zeigt die Top-Vorschläge mit Wahrscheinlichkeiten an.</li>
+      <li><b>displayPredictions(indices, values):</b> Zeigt die prognostizierten Wörter und deren Wahrscheinlichkeiten als klickbare Buttons zur Auswahl durch den Benutzer an.</li>
+      <li><b>appendWord(word):</b> Fügt das angegebene Wort per Button-Klick dem Eingabetextfeld hinzu.</li>
+      <li><b>appendNextWord():</b> Prognostiziert automatisch das nächste Wort basierend auf der aktuellen Eingabe und fügt es dem Eingabetext hinzu.</li>
+      <li><b>startAutoPrediction():</b> Setzt einen Flag, um den automatischen Prognosemodus zu aktivieren, der kontinuierlich vorhersagt und Wörter hinzufügt, bis gestoppt wird.</li>
+      <li><b>stopAutoPrediction():</b> Stoppt den automatischen Prognoseprozess, der durch startAutoPrediction() gestartet wurde.</li>
+      <li><b>autoPredict():</b> Prognostiziert und fügt automatisch das nächste Wort hinzu, bis stopAutoPrediction() aufgerufen wird.</li>
+      <li><b>resetText():</b> Löscht das Eingabetextfeld und den Bereich für die angezeigten Vorhersagen.</li>
+    </ul>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
