@@ -33,14 +33,7 @@ function preprocessInput(text) {
 
     console.log('Original Sequence:', sequence);
 
-    if (sequence.length > 30) {
-        sequence = sequence.slice(-30);
-    } else {
-        sequence = Array(30 - sequence.length).fill(0).concat(sequence);
-    }
-
-    console.log('Processed Sequence:', sequence);
-    return tf.tensor([sequence], [1, 30]);
+    return tf.tensor([sequence]);
 }
 
 async function predictNextWord() {
@@ -114,26 +107,6 @@ async function appendNextWord() {
     }
 }
 
-async function autoAppendNextWord() {
-    const inputText = document.getElementById('inputText').value;
-
-    if (!inputText) return;
-
-    const inputTensor = preprocessInput(inputText);
-    if (!inputTensor) return;
-
-    try {
-        const predictions = await model.predict(inputTensor).data();
-        const nextWordIndex = tf.argMax(predictions, -1).dataSync()[0];
-        const indexWord = JSON.parse(tokenizer.config.index_word);
-        const nextWord = indexWord[nextWordIndex] || 'Undefined';
-
-        appendWord(nextWord);
-    } catch (error) {
-        console.error('Error appending next word:', error);
-    }
-}
-
 function displayPredictions(indices, values) {
     const predictionsContainer = document.getElementById('predictionsContainer');
     const predictionsDiv = document.getElementById('predictions');
@@ -148,12 +121,12 @@ function displayPredictions(indices, values) {
 
     indices.forEach((index, i) => {
         const word = indexWord[index] || 'Undefined';
-        const probability = values[i] * 100; // Convert to percentage
+        const probability = (values[i] * 100).toFixed(2);  // Convert probability to percentage
 
-        console.log(`Index: ${index}, Word: ${word}, Probability: ${probability.toFixed(2)}%`);
+        console.log(`Index: ${index}, Word: ${word}, Probability: ${probability}%`);
 
         const button = document.createElement('button');
-        button.innerHTML = `${word} (${probability.toFixed(2)}%)`;
+        button.innerHTML = `${word} (${probability}%)`;
         button.classList.add('prediction-button'); // Apply the new class
         button.addEventListener('click', () => appendWord(word));
         predictionsDiv.appendChild(button);
