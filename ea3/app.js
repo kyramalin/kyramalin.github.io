@@ -20,7 +20,6 @@ async function loadModel() {
     }
 }
 
-
 loadModel();
 
 function preprocessInput(text) {
@@ -149,12 +148,12 @@ function displayPredictions(indices, values) {
 
     indices.forEach((index, i) => {
         const word = indexWord[index] || 'Undefined';
-        const probability = values[i];
+        const probability = values[i] * 100; // Convert to percentage
 
-        console.log(`Index: ${index}, Word: ${word}, Probability: ${probability}`);
+        console.log(`Index: ${index}, Word: ${word}, Probability: ${probability.toFixed(2)}%`);
 
         const button = document.createElement('button');
-        button.innerHTML = `${word} (${probability.toFixed(4)})`;
+        button.innerHTML = `${word} (${probability.toFixed(2)}%)`;
         button.classList.add('prediction-button'); // Apply the new class
         button.addEventListener('click', () => appendWord(word));
         predictionsDiv.appendChild(button);
