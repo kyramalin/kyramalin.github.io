@@ -69,6 +69,20 @@ async function predictNextWord() {
     }
 }
 
+function sample(preds, temperature = 1.0) {
+    preds = preds.map(p => Math.log(p) / temperature);
+    const exp_preds = preds.map(p => Math.exp(p));
+    const sum_exp_preds = exp_preds.reduce((a, b) => a + b);
+    const softmax_preds = exp_preds.map(p => p / sum_exp_preds);
+    let index = 0;
+    let r = Math.random();
+    while (r > 0) {
+        r -= softmax_preds[index];
+        index++;
+    }
+    return index - 1;
+}
+
 async function appendNextWord() {
     const inputText = document.getElementById('inputText').value;
     const messageDiv = document.getElementById('message');
@@ -85,7 +99,7 @@ async function appendNextWord() {
 
     try {
         const predictions = await model.predict(inputTensor).data();
-        const nextWordIndex = tf.argMax(predictions, -1).dataSync()[0];
+        const nextWordIndex = sample(predictions, 0.7);
         const indexWord = JSON.parse(tokenizer.config.index_word);
         const nextWord = indexWord[nextWordIndex] || 'Undefined';
 
@@ -106,6 +120,7 @@ async function appendNextWord() {
         console.error('Error appending next word:', error);
     }
 }
+
 
 function displayPredictions(indices, values) {
     const predictionsContainer = document.getElementById('predictionsContainer');
