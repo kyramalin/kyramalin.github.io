@@ -29,11 +29,21 @@ function preprocessInput(text) {
     }
 
     const wordIndex = JSON.parse(tokenizer.config.word_index);
-    let sequence = text.split(' ').map(word => wordIndex[word.toLowerCase()] || 0);
+    const sequenceLength = 3; // Adjust this based on your model's expected sequence length
+
+    // Tokenize the input text and pad/truncate to match the expected sequence length
+    const sequence = text.split(' ').map(word => wordIndex[word.toLowerCase()] || 0);
+    const paddedSequence = padSequence(sequence, sequenceLength);
 
     console.log('Original Sequence:', sequence);
+    console.log('Padded Sequence:', paddedSequence);
 
-    return tf.tensor([sequence]);
+    return tf.tensor2d([paddedSequence], [1, sequenceLength]); // Shape [1, 3]
+}
+
+// Function to pad or truncate sequence to a fixed length
+function padSequence(sequence, length) {
+    return sequence.slice(0, length).concat(Array(length - sequence.length > 0 ? length - sequence.length : 0).fill(0));
 }
 
 async function predictNextWord() {
@@ -68,6 +78,7 @@ async function predictNextWord() {
         console.error('Error predicting next word:', error);
     }
 }
+
 
 async function appendNextWord() {
     const inputText = document.getElementById('inputText').value;
