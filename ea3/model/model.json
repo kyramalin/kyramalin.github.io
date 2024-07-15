@@ -61,9 +61,8 @@
                             },
                             "recurrent_initializer": {
                                 "module": "keras.initializers",
-                                "class_name": "OrthogonalInitializer",
+                                "class_name": "GlorotUniform",
                                 "config": {
-                                    "gain": 1.0,
                                     "seed": null
                                 }
                             },
@@ -75,6 +74,7 @@
                             "unit_forget_bias": true
                         }
                     },
+                    
                     {
                         "class_name": "LSTM",
                         "config": {
