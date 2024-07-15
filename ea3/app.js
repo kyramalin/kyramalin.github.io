@@ -5,7 +5,11 @@ let isAutoPredicting = false;
 async function loadModel() {
     try {
         console.log('Loading tokenizer...');
-        tokenizer = await fetch('tokenizer.json').then(response => response.json());
+        const tokenizerResponse = await fetch('tokenizer.json');
+        if (!tokenizerResponse.ok) {
+            throw new Error(`Failed to load tokenizer: ${tokenizerResponse.statusText}`);
+        }
+        tokenizer = await tokenizerResponse.json();
         console.log('Tokenizer loaded successfully:', tokenizer);
 
         console.log('Loading model...');
@@ -15,6 +19,7 @@ async function loadModel() {
         console.error('Error loading model or tokenizer:', error);
     }
 }
+
 
 loadModel();
 
