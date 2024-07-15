@@ -43,7 +43,6 @@ async function predictNextWord() {
     const inputText = document.getElementById('inputText').value;
     const messageDiv = document.getElementById('message');
     const messageContainer = document.getElementById('message1');
-    const loadingDiv = document.getElementById('loading');
 
     if (!inputText) {
         messageDiv.innerText = 'Bitte gib zur Generierung einer Vorhersage zunächst etwas in das Textfeld ein.';
@@ -53,8 +52,6 @@ async function predictNextWord() {
 
     const inputTensor = preprocessInput(inputText);
     if (!inputTensor) return;
-
-    loadingDiv.style.display = 'block'; // Show loading message
 
     try {
         const predictions = await model.predict(inputTensor).data();
@@ -72,8 +69,6 @@ async function predictNextWord() {
         displayPredictions(indicesArray, valuesArray);
     } catch (error) {
         console.error('Error predicting next word:', error);
-    } finally {
-        loadingDiv.style.display = 'none'; // Hide loading message
     }
 }
 
