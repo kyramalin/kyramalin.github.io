@@ -108,6 +108,25 @@ async function appendNextWord() {
     }
 }
 
+async function autoAppendNextWord() {
+    const inputText = document.getElementById('inputText').value;
+
+    if (!inputText) return;
+
+    const inputTensor = preprocessInput(inputText);
+    if (!inputTensor) return;
+
+    try {
+        const predictions = await model.predict(inputTensor).data();
+        const nextWordIndex = tf.argMax(predictions, -1).dataSync()[0];
+        const indexWord = JSON.parse(tokenizer.config.index_word);
+        const nextWord = indexWord[nextWordIndex] || 'Undefined';
+
+        appendWord(nextWord);
+    } catch (error) {
+        console.error('Error appending next word:', error);
+    }
+}
 
 function displayPredictions(indices, values) {
     const predictionsContainer = document.getElementById('predictionsContainer');
@@ -165,7 +184,7 @@ function stopAutoPrediction() {
 async function autoPredict() {
     for (let i = 0; i < 10; i++) {
         if (!isAutoPredicting) break;
-        await appendNextWord();
+        await autoAppendNextWord();
         await new Promise(r => setTimeout(r, 500));
     }
 }

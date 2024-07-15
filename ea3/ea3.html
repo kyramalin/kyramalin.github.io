@@ -32,9 +32,24 @@
   <button class="accordion">Diskussion</button>
   <div class="panel">
     <p>
-    1. Experimentieren Sie mit der Netzwerkarchitektur. Dokumentieren und begründen Sie Ihre finale Architektur.
-    2. Notieren Sie als Resultat, wie oft die Vorhersage genau richtig ist (k=1), und wie oft das korrekte nächste Wort unter den ersten k Worten, die sie vorhersagen liegt, mit k gleich 5, 10, 20 und 100. Sie können auch die Perplexity (siehe Hintergrund) als Maß Ihrer Resultate nutzen.
-    3. Können Sie Ihre ursprünglichen Trainingsdaten mittels des trainierten Models rekonstruieren?  (überlegen Sie, ob sich daraus ein Datenschutzproblem ergibt).
+<b>Modellaufbau</b></br>
+<li>Stacked LSTM: 2 hidden Layer mit je 100 LSTM Units </li>
+<li>Softmax Output mit der Dimension des Dictionaries</li>
+<li>Loss: Sparse Categorical Cross-Entropy </li>
+<li>Optimizer: Adam mit Lernrate 0.01 und Batch-Site 64 </li>
+<li>Epochen: 10</li></br>
+<b>Begründung</b></br>
+In erster Linie entspringt der Modellaufbau der Aufgabenstellung. Anpassungen wurden vorgenommen hinsichtlich der Ressourcennutzung. Bestimmte Modellarchitekturen haben zu Laufzeitabbrüchen geführt, sodass ein Training nicht vollständig möglich war. </br>
+Als Konsequenz musste außerdem der Datensatz verkleinert werden (vgl. Abschnitt "Dokumentation"). Grundsätzlich sollte eine Entscheidung bzgl. der Modellarchitektur hinsichtlich der Entwicklung von Loss und die Accuracy getroffen werden.</br></br>
+
+<b>Hinweise zu den Resultaten</b></br>
+
+
+<b>Rekonstruierbarkeit & Datenschutz</b></br>
+Eine Rekonstruktion der ursprünglichen Trainingsdaten ist in diesem Fall nicht möglich gewesen. </br>
+Grundsätzlich könnte dies jedoch möglich sein, bspw. bei sehr spezifischen oder wenig variablen Trainingsdaten. </br>
+Zudem können insbesondere bei Überanpassung Informationen über die Trainingsdaten "auwendigg gelernt" werden, sodass das Risiko einer Rekonstruierbarkeit besteht. 
+Hieraus könnte sich je nach Kontext und Beschaffung der Daten ein Datenschutzproblem ergeben.</br></br>
 </p>
   </div>
   <button class="accordion">Dokumentation</button>
