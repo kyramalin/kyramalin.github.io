@@ -202,11 +202,31 @@ function resetText() {
     document.getElementById('message1').style.display = 'none';
 }
 
-document.getElementById('predictButton').addEventListener('click', predictNextWord);
-document.getElementById('nextButton').addEventListener('click', appendNextWord);
-document.getElementById('autoButton').addEventListener('click', startAutoPrediction);
-document.getElementById('stopButton').addEventListener('click', stopAutoPrediction);
-document.getElementById('resetButton').addEventListener('click', resetText);
+document.getElementById('predictButton').addEventListener('click', () => {
+    console.log('Predict Button Clicked');
+    predictNextWord();
+});
+
+document.getElementById('nextButton').addEventListener('click', () => {
+    console.log('Next Button Clicked');
+    appendNextWord();
+});
+
+document.getElementById('autoButton').addEventListener('click', () => {
+    console.log('Auto Button Clicked');
+    startAutoPrediction();
+});
+
+document.getElementById('stopButton').addEventListener('click', () => {
+    console.log('Stop Button Clicked');
+    stopAutoPrediction();
+});
+
+document.getElementById('resetButton').addEventListener('click', () => {
+    console.log('Reset Button Clicked');
+    resetText();
+});
+
 document.getElementById('inputText').addEventListener('input', () => {
     document.getElementById('message').innerText = '';
     document.getElementById('message1').style.display = 'none';
