@@ -43,7 +43,7 @@
                         "config": {
                             "name": "lstm_5",
                             "units": 100,
-                            "return_sequences": true
+                            "return_sequences": false 
                         }
                     },
                     {
@@ -51,7 +51,7 @@
                         "config": {
                             "name": "dense_2",
                             "units": 13192,
-                            "activation": "softmax"
+                            "activation": "softmax" 
                         }
                     }
                 ],
