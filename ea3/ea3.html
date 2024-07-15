@@ -8,8 +8,9 @@
 </head>
 <body>
   <h1>Deep Learning EA 3: Language Model mit LSTM</h1>
-  <p>Diese Seite wurde für das Modul Deep Learning erstellt und zeigt das Language Model mit LSTM.</p>
-  <div style="padding-left: 5px; padding-right: 5px;">
+  <p>Diese Seite wurde für das Modul Deep Learning erstellt und zeigt das Language Model mit LSTM. Mithilfe verschiedener Funktionen kann hierbei die Next Word Prediction getestet werden. Im Abschnitt "Diskussion" folgt eine kurze Auseinandersetzung mit dem Modell. Zuletzt können im Abschnitt "Dokumentation" die verwendeten Frameworks und Technologien eingesehen werden.</p>
+  <div style="padding-left: 5px; padding-right: 5px; padding-top:10px;">
+    <p><b>Texteingabe</b></p>
   <textarea id="inputText" rows="4" cols="40" style="width: 100%; font-size: 12px; border-radius: 5px; padding: 10px;" placeholder="Gib etwas ein..."></textarea>
   <div style="padding-bottom: 5px"></div>
   <div class="message" id="message1" style= "display: none;">
@@ -17,14 +18,14 @@
 </div>
 </div>
   <div style="margin-top: 10px; margin-bottom: 20px">
-  <button id="predictButton">Vorhersage</button>
+  <button id="predictButton">Textvorhersage</button>
   <button id="nextButton">Wahrscheinlichstes Wort anhängen</button>
   <button id="autoButton">Auto-Generierung</button>
   <button id="stopButton">Stopp</button>
   <button id="resetButton">Zurücksetzen</button>
   <div id="loading" style="display: none;">Loading...</div>
   <div id="predictionsContainer" style="display:none;">
-    <h4>Vorhersagen</h3>
+    <h4>Vorhersagen</h4>
   <div id="predictions"></div>
   </div>
 </div>
