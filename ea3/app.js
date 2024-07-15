@@ -98,6 +98,18 @@ async function appendNextWord() {
         const nextWord = indexWord[nextWordIndex] || 'Undefined';
 
         appendWord(nextWord);
+
+        // Display predictions after appending the word
+        const topK = 5;
+        const { values, indices } = tf.topk(predictions, topK);
+
+        const valuesArray = await values.data();
+        const indicesArray = await indices.data();
+
+        console.log('TopK Indices:', indicesArray);
+        console.log('TopK Values:', valuesArray);
+
+        displayPredictions(indicesArray, valuesArray);
     } catch (error) {
         console.error('Error appending next word:', error);
     }
