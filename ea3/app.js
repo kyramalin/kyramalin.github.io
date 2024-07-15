@@ -81,7 +81,6 @@ async function appendNextWord() {
     const inputText = document.getElementById('inputText').value;
     const messageDiv = document.getElementById('message');
     const messageContainer = document.getElementById('message1');
-    const loadingDiv = document.getElementById('loading');
 
     if (!inputText) {
         messageDiv.innerText = 'Bitte gib zur Generierung einer Vorhersage zunächst etwas in das Textfeld ein.';
@@ -92,8 +91,6 @@ async function appendNextWord() {
     const inputTensor = preprocessInput(inputText);
     if (!inputTensor) return;
 
-    loadingDiv.style.display = 'block'; // Show loading message
-
     try {
         const predictions = await model.predict(inputTensor).data();
         const nextWordIndex = tf.argMax(predictions, -1).dataSync()[0];
@@ -103,8 +100,6 @@ async function appendNextWord() {
         appendWord(nextWord);
     } catch (error) {
         console.error('Error appending next word:', error);
-    } finally {
-        loadingDiv.style.display = 'none'; // Hide loading message
     }
 }
 
@@ -172,6 +167,9 @@ function startAutoPrediction() {
         messageContainer.style.display = 'block';
         return;
     }
+
+    document.getElementById('predictions').innerHTML = ''; // Reset predictions
+    document.getElementById('predictionsContainer').style.display = 'none'; // Hide predictions container
 
     isAutoPredicting = true;
     autoPredict();
